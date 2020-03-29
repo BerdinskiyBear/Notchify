@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "ru.berdinskiybear.notchify.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "NotchifyUsingAnvil",
+    "NotchifyUsingEnchantingTable"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

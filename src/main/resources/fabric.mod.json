@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "notchify",
+  "version": "${version}",
+  "name": "Notchify",
+  "description": "Mod allows to enchant golden apples. That's it.",
+  "authors": [
+    "BerdinskiyBear"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/notchify/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.berdinskiybear.notchify.NotchifyMod"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [
+    "notchify.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  }
+}
