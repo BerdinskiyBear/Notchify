@@ -26,7 +26,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: built libs
-        path: build/libs/notchify-*.jar
+        path: build/libs
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
