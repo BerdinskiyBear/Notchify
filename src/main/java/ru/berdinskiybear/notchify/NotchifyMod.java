@@ -39,8 +39,7 @@ public class NotchifyMod implements ModInitializer {
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         File configFile = new File(FabricLoader.INSTANCE.getConfigDirectory(), MOD_ID + ".json");
         if (configFile.exists()) {
-            try {
-                FileReader fileReader = new FileReader(configFile);
+            try (FileReader fileReader = new FileReader(configFile)) {
                 currentConfig = gson.fromJson(fileReader, NotchifyConfig.class);
             } catch (IOException exception) {
                 log(Level.ERROR, "Unable to read the config file");
@@ -50,8 +49,7 @@ public class NotchifyMod implements ModInitializer {
         } else {
             log(Level.WARN, "No config file found, creating new one");
             currentConfig = new NotchifyConfig();
-            try {
-                FileWriter fileWriter = new FileWriter(configFile);
+            try (FileWriter fileWriter = new FileWriter(configFile)) {
                 gson.toJson(currentConfig, fileWriter);
             } catch (IOException exception) {
                 log(Level.ERROR, "Unable to create and/or write config file " + configFile.getAbsolutePath() + configFile.getName());
