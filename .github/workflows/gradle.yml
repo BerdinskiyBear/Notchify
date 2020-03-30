@@ -25,6 +25,7 @@ jobs:
     - name: Save results as artifacts
       uses: actions/upload-artifact@v1
       with:
+        name: ${{ github.ref }}
         path: build/libs/notchify-*.jar
     - name: Create release
       id: create_release
