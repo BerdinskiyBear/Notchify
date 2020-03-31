@@ -26,4 +26,4 @@ By default chance of enchanting of a golden apple is about 7.6%.
 For example, if you set this modifier to `6.5` 50% of all attempts will be successful.
     * Default value: `1.0`
     
-If one or several of these parameters are not present, default value for these parameters will be used.
+If one or several of these parameters are not present, default value for missing parameters will be used.
