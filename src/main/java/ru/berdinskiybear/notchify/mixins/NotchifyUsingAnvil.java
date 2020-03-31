@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.berdinskiybear.notchify.NotchifyMod;
 
 @Mixin(AnvilContainer.class)
 public class NotchifyUsingAnvil {
@@ -23,17 +24,19 @@ public class NotchifyUsingAnvil {
 
     @Inject(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/container/AnvilContainer;sendContentUpdates()V"), cancellable = true)
     public void notchification(CallbackInfo info) {
-        ItemStack leftStack = this.inventory.getInvStack(0);
-        ItemStack rightStack = this.inventory.getInvStack(1);
-        ItemStack egapples = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
+        if (NotchifyMod.getConfig().isAnvilEnabled()) {
+            ItemStack leftStack = this.inventory.getInvStack(0);
+            ItemStack rightStack = this.inventory.getInvStack(1);
+            ItemStack egapples = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
 
-        if (leftStack.getItem() == Items.GOLDEN_APPLE && leftStack.getCount() == 1 && rightStack.isEmpty())
-            if (StringUtils.isBlank(this.newItemName)) {
-                this.result.setInvStack(0, egapples);
-                this.levelCost.set(39);
-            } else if (leftStack.hasCustomName() && leftStack.getName().asString().equals(this.newItemName)) {
-                this.result.setInvStack(0, egapples.setCustomName(leftStack.getName()));
-                this.levelCost.set(39);
-            }
+            if (leftStack.getItem() == Items.GOLDEN_APPLE && leftStack.getCount() == 1 && rightStack.isEmpty())
+                if (StringUtils.isBlank(this.newItemName)) {
+                    this.result.setInvStack(0, egapples);
+                    this.levelCost.set(NotchifyMod.getConfig().getEGAppleEnchantmentCost());
+                } else if (leftStack.hasCustomName() && leftStack.getName().asString().equals(this.newItemName)) {
+                    this.result.setInvStack(0, egapples.setCustomName(leftStack.getName()));
+                    this.levelCost.set(NotchifyMod.getConfig().getEGAppleEnchantmentCost());
+                }
+        }
     }
 }

@@ -6,4 +6,6 @@ Mod was made with vanilla players in mind: if mod is installed on the server cli
 
 [Latest releases!](https://github.com/BerdinskiyBear/Notchify/releases)
 
-This mod is still pretty much in development: configuration and some other functionality is coming soon...
+This mod is still in development: more functionality is coming soon...
+
+[Configurations](configs.md)
