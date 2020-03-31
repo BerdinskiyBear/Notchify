@@ -38,11 +38,11 @@ public class NotchifyConfig {
         return egappleEnchantmentCost;
     }
 
-    public boolean isCreativePlayerAlwaysSucceeds() {
+    public boolean isCreativePlayerAlwaysSuccessful() {
         return creativePlayerAlwaysSucceeds;
     }
 
-    public boolean isSurvivalPlayerAlwaysSucceeds() {
+    public boolean isSurvivalPlayerAlwaysSuccessful() {
         return survivalPlayerAlwaysSucceeds;
     }
 
