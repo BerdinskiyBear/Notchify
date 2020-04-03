@@ -118,10 +118,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
-                        float playerChance = ((float) (enchantmentPower[id]) * NotchifyMod.getConfig().getEnchantingChanceModifier()) / ((float) (NotchifyMod.getConfig().getEGAppleEnchantmentCost()) * 10.0F);
-                        float choice = this.random.nextFloat();
-
-                        //NotchifyMod.log(playerChance * 100.0F + "%");
+                        float playerChance = ((float) (enchantmentPower[id]) * NotchifyMod.getConfig().getEnchantingChanceModifier()) / ((float) (NotchifyMod.getConfig().getEGAppleEnchantmentCost()) * 10.0F) ;
 
                         player.applyEnchantmentCosts(null, button);
 
@@ -131,11 +128,15 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                                 this.inventory.setInvStack(1, ItemStack.EMPTY);
                         }
 
-                        if ((choice < playerChance || (player.abilities.creativeMode && NotchifyMod.getConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getConfig().isSurvivalPlayerAlwaysSuccessful()) {
+                        if ((this.random.nextFloat() < playerChance || (player.abilities.creativeMode && NotchifyMod.getConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getConfig().isSurvivalPlayerAlwaysSuccessful()) {
                             ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
 
                             if (enchantingStack.hasCustomName())
                                 newApple.setCustomName(enchantingStack.getName());
+
+                            if (NotchifyMod.getConfig().canEGApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getConfig().getCurseChance())) {
+                                newApple.addEnchantment(Enchantments.VANISHING_CURSE, 1);
+                            }
 
                             this.inventory.setInvStack(0, newApple);
 
@@ -146,6 +147,10 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
                         } else {
+                            if (NotchifyMod.getConfig().canGoldenAppleVanish() && (this.random.nextFloat() < NotchifyMod.getConfig().getVanishingChance())) {
+                                this.inventory.setInvStack(0, ItemStack.EMPTY);
+                            }
+
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 2.0F);
                         }
 
