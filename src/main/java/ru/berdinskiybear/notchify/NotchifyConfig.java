@@ -16,6 +16,14 @@ public class NotchifyConfig {
     private boolean survivalPlayerAlwaysSucceeds;
     @SerializedName("enchanting_chance_modifier")
     private float enchantingChanceModifier;
+    @SerializedName("can_golden_apple_vanish")
+    private boolean canGoldenAppleVanish;
+    @SerializedName("vanishing_chance")
+    private float vanishingChance;
+    @SerializedName("can_enchanted_golden_apple_become_cursed")
+    private boolean canEGApplesBecomeCursed;
+    @SerializedName("chance_of_curse")
+    private float curseChance;
 
     public NotchifyConfig() {
         enableAnvil = true;
@@ -24,6 +32,10 @@ public class NotchifyConfig {
         creativePlayerAlwaysSucceeds = true;
         survivalPlayerAlwaysSucceeds = false;
         enchantingChanceModifier = 1.0F;
+        canGoldenAppleVanish = true;
+        vanishingChance = 0.9F;
+        canEGApplesBecomeCursed = true;
+        curseChance = 0.1F;
     }
 
     public boolean isAnvilEnabled() {
@@ -48,5 +60,21 @@ public class NotchifyConfig {
 
     public float getEnchantingChanceModifier() {
         return enchantingChanceModifier;
+    }
+
+    public boolean canGoldenAppleVanish() {
+        return canGoldenAppleVanish;
+    }
+
+    public float getVanishingChance() {
+        return vanishingChance;
+    }
+
+    public boolean canEGApplesBecomeCursed() {
+        return canEGApplesBecomeCursed;
+    }
+
+    public float getCurseChance() {
+        return curseChance;
     }
 }
