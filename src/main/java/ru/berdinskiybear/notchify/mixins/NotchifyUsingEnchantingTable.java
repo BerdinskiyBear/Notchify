@@ -115,7 +115,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                 ItemStack lapisStack = this.inventory.getInvStack(1);
                 int button = id + 1;
 
-                if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel > button && player.experienceLevel > this.enchantmentPower[id]) || player.abilities.creativeMode) {
+                if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
                         float playerChance = ((float) (enchantmentPower[id]) * NotchifyMod.getConfig().getEnchantingChanceModifier()) / ((float) (NotchifyMod.getConfig().getEGAppleEnchantmentCost()) * 10.0F);
