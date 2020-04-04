@@ -24,6 +24,10 @@ public class NotchifyConfig {
     private boolean canEGApplesBecomeCursed;
     @SerializedName("chance_of_curse")
     private float curseChance;
+    @SerializedName("anvil_requires_secondary_item")
+    private boolean secondaryItemRequired;
+    @SerializedName("anvil_secondary_item_id")
+    private String secondaryItemID;
 
     public NotchifyConfig() {
         enableAnvil = true;
@@ -36,6 +40,8 @@ public class NotchifyConfig {
         vanishingChance = 0.9F;
         canEGApplesBecomeCursed = true;
         curseChance = 0.1F;
+        secondaryItemRequired = true;
+        secondaryItemID = "minecraft:nether_star";
     }
 
     public boolean isAnvilEnabled() {
@@ -76,5 +82,13 @@ public class NotchifyConfig {
 
     public float getCurseChance() {
         return curseChance;
+    }
+
+    public boolean isSecondaryItemRequired() {
+        return secondaryItemRequired;
+    }
+
+    public String getSecondaryItemID() {
+        return secondaryItemID;
     }
 }
