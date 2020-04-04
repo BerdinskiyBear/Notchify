@@ -115,6 +115,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                 ItemStack lapisStack = this.inventory.getInvStack(1);
                 int button = id + 1;
 
+                // если либо есть лазурит и его не меньше чем выбранный уровень и у игрока опыта не меньше чем выбранного уровня и уровня зачарования, либо игрок в творческом режиме
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
@@ -128,6 +129,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                                 this.inventory.setInvStack(1, ItemStack.EMPTY);
                         }
 
+                        // если либо игрок или удачлив, или в творческом режиме и настройки это допускают, либо все игроки всегда удачливы
                         if ((this.random.nextFloat() < playerChance || (player.abilities.creativeMode && NotchifyMod.getConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getConfig().isSurvivalPlayerAlwaysSuccessful()) {
                             ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
 
