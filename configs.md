@@ -25,5 +25,24 @@ If set to `false` creative players will have same chance of enchanting a golden 
 By default chance of enchanting of a golden apple is about 7.6%.
 For example, if you set this modifier to `6.5` 50% of all attempts will be successful.
     * Default value: `1.0`
+7. ##### `can_golden_apple_vanish`
+    This parameter determines whether golden apple can disappear if enchanting fails or not.
+    * Default value: `true`
+8. ##### `vanishing_chance`
+    This parameter sets the chance of a golden apple disappearing if enchanting fails.
+    * Default value: `0.9`
+9. ##### `can_enchanted_golden_apple_become_cursed`
+    This parameter allows successfully enchanted golden apples to also be cursed.
+    * Default value: `true`
+10. ##### `chance_of_curse`
+    This parameter sets the chance of a golden apple becoming cursed when enchanted successfully.
+    * Default value: `0.1`
+11. ##### `anvil_requires_secondary_item`
+    This parameter determines whether a second item is required or not when creating enchanted golden apples using anvil.
+    * Default value: `true`
+12. ##### `anvil_secondary_item_id`
+    This parameter sets the item that a player has to combine with a golden apple on an anvil to get enchanted golden apple.
+Parameter has to be a [namespaced ID](https://minecraft.gamepedia.com/Namespaced_ID) of the item surrounded with double quotes.
+    * Default value: `"minecraft:nether_star"`
     
 If one or several of these parameters are not present, default value for missing parameters will be used.
