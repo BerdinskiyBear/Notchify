@@ -24,5 +24,9 @@
   ],
   "depends": {
     "fabricloader": ">=0.4.0"
+  },
+  "recommends": {
+    "fabric": "*",
+    "anvil_fix": "*"
   }
 }
