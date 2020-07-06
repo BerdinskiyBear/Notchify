@@ -1,8 +1,8 @@
 package ru.berdinskiybear.notchify.mixins;
 
-import net.minecraft.advancement.criterion.Criterions;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
-import net.minecraft.container.*;
+import net.minecraft.screen.*;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -25,15 +25,15 @@ import ru.berdinskiybear.notchify.NotchifyMod;
 
 import java.util.Random;
 
-@Mixin(EnchantingTableContainer.class)
-public abstract class NotchifyUsingEnchantingTable extends Container {
+@Mixin(EnchantmentScreenHandler.class)
+public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
-    protected NotchifyUsingEnchantingTable(ContainerType<?> type, int syncId) {
+    protected NotchifyUsingEnchantingTable(ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);
     }
 
     @Shadow @Final private Inventory inventory;
-    @Shadow @Final private BlockContext context;
+    @Shadow @Final private ScreenHandlerContext context;
     @Shadow @Final private Random random;
     @Shadow @Final private Property seed;
     @Shadow @Final public int[] enchantmentPower;
@@ -45,7 +45,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
     public void notchificationCalculations(Inventory inv, CallbackInfo info) {
         if (NotchifyMod.getConfig().isEnchantingTableEnabled()) {
             if (inv == this.inventory) {
-                ItemStack enchantingStack = inv.getInvStack(0);
+                ItemStack enchantingStack = inv.getStack(0);
                 if (enchantingStack.getItem() == Items.GOLDEN_APPLE && enchantingStack.getCount() == 1) {
                     this.context.run((world, blockPos) -> {
                         int bookshelves = 0;
@@ -109,10 +109,10 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
     @Inject(method = "onButtonClick", at = @At(value = "HEAD"), cancellable = true)
     public void notchification(PlayerEntity player, int id, CallbackInfoReturnable<Boolean> info) {
         if (NotchifyMod.getConfig().isEnchantingTableEnabled()) {
-            ItemStack enchantingStack = this.inventory.getInvStack(0);
+            ItemStack enchantingStack = this.inventory.getStack(0);
 
             if (enchantingStack.getItem() == Items.GOLDEN_APPLE && enchantingStack.getCount() == 1) {
-                ItemStack lapisStack = this.inventory.getInvStack(1);
+                ItemStack lapisStack = this.inventory.getStack(1);
                 int button = id + 1;
 
                 // если либо есть лазурит и его не меньше чем выбранный уровень и у игрока опыта не меньше чем выбранного уровня и уровня зачарования, либо игрок в творческом режиме
@@ -126,7 +126,7 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                         if (!player.abilities.creativeMode) {
                             lapisStack.decrement(button);
                             if (lapisStack.isEmpty())
-                                this.inventory.setInvStack(1, ItemStack.EMPTY);
+                                this.inventory.setStack(1, ItemStack.EMPTY);
                         }
 
                         // если либо игрок или удачлив, или в творческом режиме и настройки это допускают, либо все игроки всегда удачливы
@@ -140,17 +140,17 @@ public abstract class NotchifyUsingEnchantingTable extends Container {
                                 newApple.addEnchantment(Enchantments.VANISHING_CURSE, 1);
                             }
 
-                            this.inventory.setInvStack(0, newApple);
+                            this.inventory.setStack(0, newApple);
 
                             player.incrementStat(Stats.ENCHANT_ITEM);
 
                             if (player instanceof ServerPlayerEntity)
-                                Criterions.ENCHANTED_ITEM.trigger((ServerPlayerEntity) player, enchantingStack, button);
+                                Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity) player, enchantingStack, button);
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
                         } else {
                             if (NotchifyMod.getConfig().canGoldenAppleVanish() && (this.random.nextFloat() < NotchifyMod.getConfig().getVanishingChance())) {
-                                this.inventory.setInvStack(0, ItemStack.EMPTY);
+                                this.inventory.setStack(0, ItemStack.EMPTY);
                             }
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 2.0F);
