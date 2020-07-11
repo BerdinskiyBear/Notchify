@@ -149,7 +149,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
                         } else {
-                            if (NotchifyMod.getConfig().canGoldenAppleVanish() && (this.random.nextFloat() < NotchifyMod.getConfig().getVanishingChance())) {
+                            if (NotchifyMod.getConfig().canGoldenAppleVanish() && (this.random.nextFloat() < (NotchifyMod.getConfig().getVanishingChance() * (this.enchantmentPower[id] / 30.0F)))) {
                                 this.inventory.setStack(0, ItemStack.EMPTY);
                             }
 
