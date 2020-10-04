@@ -3,7 +3,7 @@ package ru.berdinskiybear.notchify;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.FabricLoader;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +37,7 @@ public class NotchifyMod implements ModInitializer {
     public static void loadConfig() {
         log("Loading config...");
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-        File configFile = new File(FabricLoader.INSTANCE.getConfigDirectory(), MOD_ID + ".json");
+        File configFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), MOD_ID + ".json");
         if (configFile.exists()) {
             try (FileReader fileReader = new FileReader(configFile)) {
                 currentConfig = gson.fromJson(fileReader, NotchifyConfig.class);
