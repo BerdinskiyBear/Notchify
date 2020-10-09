@@ -28,6 +28,8 @@ public class NotchifyConfig {
     private boolean secondaryItemRequired;
     @SerializedName("anvil_secondary_item_id")
     private String secondaryItemID;
+    @SerializedName("anvil_secondary_item_amount")
+    private int secondaryItemAmount;
 
     public NotchifyConfig() {
         enableAnvil = true;
@@ -42,6 +44,7 @@ public class NotchifyConfig {
         curseChance = 0.1F;
         secondaryItemRequired = true;
         secondaryItemID = "minecraft:nether_star";
+        secondaryItemAmount = 1;
     }
 
     public boolean isAnvilEnabled() {
@@ -90,5 +93,9 @@ public class NotchifyConfig {
 
     public String getSecondaryItemID() {
         return secondaryItemID;
+    }
+
+    public int getSecondaryItemAmount() {
+        return secondaryItemAmount;
     }
 }

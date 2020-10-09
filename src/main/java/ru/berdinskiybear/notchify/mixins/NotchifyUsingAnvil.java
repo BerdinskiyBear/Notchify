@@ -36,7 +36,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                 ItemStack rightStack = this.input.getStack(1);
 
                 // если либо предмет справа необходим и он как в настройках и он один, либо предмет справа не нужен и предмет справа отсутствует
-                if ((NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getConfig().getSecondaryItemID())) && rightStack.getCount() == 1) || (!NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.isEmpty())) {
+                if ((NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getConfig().getSecondaryItemID())) && rightStack.getCount() == NotchifyMod.getConfig().getSecondaryItemAmount()) || (!NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.isEmpty())) {
                     ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
                     if (leftStack.hasCustomName())
                         newApple.setCustomName(leftStack.getName());
