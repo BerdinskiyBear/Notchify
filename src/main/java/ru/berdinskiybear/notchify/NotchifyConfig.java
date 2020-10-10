@@ -1,6 +1,10 @@
 package ru.berdinskiybear.notchify;
 
 import com.google.gson.annotations.SerializedName;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringNbtReader;
+import org.apache.logging.log4j.Level;
 
 public class NotchifyConfig {
 
@@ -30,6 +34,12 @@ public class NotchifyConfig {
     private String secondaryItemID;
     @SerializedName("anvil_secondary_item_amount")
     private int secondaryItemAmount;
+    @SerializedName("anvil_secondary_item_nbt_enabled")
+    private boolean secondaryItemNbtEnabled;
+    @SerializedName("anvil_secondary_item_nbt")
+    private String secondaryItemNbtString;
+
+    private transient CompoundTag secondaryItemNbt;
 
     public NotchifyConfig() {
         enableAnvil = true;
@@ -45,6 +55,9 @@ public class NotchifyConfig {
         secondaryItemRequired = true;
         secondaryItemID = "minecraft:nether_star";
         secondaryItemAmount = 1;
+        secondaryItemNbtEnabled = false;
+        secondaryItemNbtString = "{}";
+        secondaryItemNbt = null;
     }
 
     public boolean isAnvilEnabled() {
@@ -97,5 +110,20 @@ public class NotchifyConfig {
 
     public int getSecondaryItemAmount() {
         return secondaryItemAmount;
+    }
+
+    public boolean isSecondaryItemNbtEnabled() {
+        return secondaryItemNbtEnabled;
+    }
+
+    public CompoundTag getSecondaryItemNbt() {
+        if (secondaryItemNbt == null)
+            try {
+                secondaryItemNbt = StringNbtReader.parse(secondaryItemNbtString);
+            } catch (CommandSyntaxException e) {
+                NotchifyMod.log(Level.ERROR, e.getMessage());
+                secondaryItemNbt = new CompoundTag();
+            }
+        return secondaryItemNbt;
     }
 }

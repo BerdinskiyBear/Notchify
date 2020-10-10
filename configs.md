@@ -42,7 +42,19 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
     * Default value: `true`
 12. ##### `anvil_secondary_item_id`
     This parameter sets the item that a player has to combine with a golden apple on an anvil to get enchanted golden apple.
-Parameter has to be a [namespaced ID](https://minecraft.gamepedia.com/Namespaced_ID) of the item surrounded with double quotes.
+    Parameter has to be a [namespaced ID](https://minecraft.gamepedia.com/Namespaced_ID) of the item surrounded with double quotes.
     * Default value: `"minecraft:nether_star"`
+13. ##### `anvil_secondary_item_amount`
+    This parameter sets the amount of secondary item one will need to enchant a golden apple.
+    * Default value: `1`
+14. ##### `anvil_secondary_item_nbt_enabled`
+    This parameter determines whether NBT of secondary item is considered.
+    * Default value: `false`
+15. ##### `anvil_secondary_item_nbt`
+    This string contains a text representation of a compound tag with tags that secondary item must have in its
+    [data](https://minecraft.gamepedia.com/Player.dat_format#General_Tags) [tag](https://minecraft.gamepedia.com/Commands#Data_tags).
+    Symbols `"` and `\ ` must be escaped. For example data tag `{Potion: "minecraft:strong_regeneration"}` has to be
+    written `"{Potion: \"minecraft:strong_regeneration\"}"`.
+    * Default value: `"{}"`
     
 If one or several of these parameters are not present, default value for missing parameters will be used.
