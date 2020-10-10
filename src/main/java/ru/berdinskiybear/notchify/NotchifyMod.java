@@ -18,12 +18,16 @@ public class NotchifyMod implements ModInitializer {
 
     public static final String MOD_ID = "notchify";
     public static final String MOD_NAME = "Notchify";
+    public static final String FABRIC_ID = "fabric";
 
     private static NotchifyConfig currentConfig;
 
     @Override
     public void onInitialize() {
         loadConfig();
+        if(FabricLoader.getInstance().isModLoaded(FABRIC_ID)){
+            NotchifyConfigReloader.register();
+        }
     }
 
     public static void log(String message) {
