@@ -6,7 +6,8 @@
     "NotchifyUsingAnvil",
     "NotchifyUsingEnchantingTable",
     "UnNotchifyUsingGrindstone",
-    "UnNotchifyUsingGrindstoneInsertion"
+    "UnNotchifyUsingGrindstoneInsertion",
+    "UnNotchifyUsingGrindstoneExperience"
   ],
   "client": [],
   "server": [],
