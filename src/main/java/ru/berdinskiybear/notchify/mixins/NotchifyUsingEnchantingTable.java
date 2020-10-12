@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import ru.berdinskiybear.notchify.NotchificationStuffs;
 import ru.berdinskiybear.notchify.NotchifyMod;
 
 import java.util.Random;
@@ -85,7 +84,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                         this.random.setSeed(this.seed.get());
 
                         for (int i = 0; i < 3; i++) {
-                            this.enchantmentPower[i] = NotchificationStuffs.calculateEnchantmentPower(this.random, i, bookshelves);
+                            this.enchantmentPower[i] = NotchifyMod.calculateEnchantmentPower(this.random, i, bookshelves);
                             this.enchantmentId[i] = -1;
                             this.enchantmentLevel[i] = -1;
                             if (this.enchantmentPower[i] < i + 1) this.enchantmentPower[i] = 0;

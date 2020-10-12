@@ -20,8 +20,7 @@ public class UnNotchifyUsingGrindstoneExperience extends Slot {
     @Inject(method = "getExperience(Lnet/minecraft/item/ItemStack;)I", at = @At(value = "HEAD"), cancellable = true)
     public void insertion(ItemStack stack, CallbackInfoReturnable<Integer> info) {
         if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE) {
-            int lvl = NotchifyMod.getConfig().getEGAppleEnchantmentCost();
-            info.setReturnValue((int) (((lvl <= 16) ? (lvl * (lvl + 6)) : ((lvl <= 31) ? ((2.5D * lvl * lvl) - (40.5D * lvl) + 360) : ((4.5D * lvl * lvl) - (162.5D * lvl) + 2220))) * stack.getCount() * 1.0D));
+            info.setReturnValue((int) (NotchifyMod.xpLevelsToPoints(NotchifyMod.getConfig().getEGAppleEnchantmentCost()) * stack.getCount() * 1.0D));
         }
     }
 }
