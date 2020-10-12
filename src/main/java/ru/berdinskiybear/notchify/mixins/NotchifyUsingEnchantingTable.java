@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ru.berdinskiybear.notchify.NotchifyMod;
-
 import java.util.Random;
 
 @Mixin(EnchantmentScreenHandler.class)
@@ -118,7 +117,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
-                        float playerChance = ((float) (enchantmentPower[id]) * NotchifyMod.getConfig().getEnchantingChanceModifier()) / ((float) (NotchifyMod.getConfig().getEGAppleEnchantmentCost()) * 10.0F) ;
+                        float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getConfig().getEnchantingChanceModifier()) / (NotchifyMod.getConfig().getEGAppleEnchantmentCost() * 10.0D));
 
                         player.applyEnchantmentCosts(null, button);
 

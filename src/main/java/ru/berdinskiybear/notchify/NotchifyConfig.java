@@ -19,15 +19,15 @@ public class NotchifyConfig {
     @SerializedName("survival_player_always_succeeds")
     private boolean survivalPlayerAlwaysSucceeds;
     @SerializedName("enchanting_chance_modifier")
-    private float enchantingChanceModifier;
+    private double enchantingChanceModifier;
     @SerializedName("can_golden_apple_vanish")
     private boolean canGoldenAppleVanish;
     @SerializedName("vanishing_chance")
-    private float vanishingChance;
+    private double vanishingChance;
     @SerializedName("can_enchanted_golden_apple_become_cursed")
     private boolean canEGApplesBecomeCursed;
     @SerializedName("chance_of_curse")
-    private float curseChance;
+    private double curseChance;
     @SerializedName("anvil_requires_secondary_item")
     private boolean secondaryItemRequired;
     @SerializedName("anvil_secondary_item_id")
@@ -47,11 +47,11 @@ public class NotchifyConfig {
         egappleEnchantmentCost = 39;
         creativePlayerAlwaysSucceeds = true;
         survivalPlayerAlwaysSucceeds = false;
-        enchantingChanceModifier = 1.0F;
+        enchantingChanceModifier = 1.0D;
         canGoldenAppleVanish = true;
-        vanishingChance = 0.9F;
+        vanishingChance = 0.9D;
         canEGApplesBecomeCursed = true;
-        curseChance = 0.1F;
+        curseChance = 0.1D;
         secondaryItemRequired = true;
         secondaryItemID = "minecraft:nether_star";
         secondaryItemAmount = 1;
@@ -80,7 +80,7 @@ public class NotchifyConfig {
         return survivalPlayerAlwaysSucceeds;
     }
 
-    public float getEnchantingChanceModifier() {
+    public double getEnchantingChanceModifier() {
         return enchantingChanceModifier;
     }
 
@@ -88,7 +88,7 @@ public class NotchifyConfig {
         return canGoldenAppleVanish;
     }
 
-    public float getVanishingChance() {
+    public double getVanishingChance() {
         return vanishingChance;
     }
 
@@ -96,7 +96,7 @@ public class NotchifyConfig {
         return canEGApplesBecomeCursed;
     }
 
-    public float getCurseChance() {
+    public double getCurseChance() {
         return curseChance;
     }
 
