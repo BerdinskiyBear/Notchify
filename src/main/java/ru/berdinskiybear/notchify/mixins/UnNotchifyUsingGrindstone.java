@@ -6,7 +6,6 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.GrindstoneScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GrindstoneScreenHandler.class)
 public abstract class UnNotchifyUsingGrindstone extends ScreenHandler {
-    protected UnNotchifyUsingGrindstone(@Nullable ScreenHandlerType<?> type, int syncId) {
+    protected UnNotchifyUsingGrindstone(ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);
     }
 
