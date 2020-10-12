@@ -38,6 +38,10 @@ public class NotchifyConfig {
     private boolean secondaryItemNbtEnabled;
     @SerializedName("anvil_secondary_item_nbt")
     private String secondaryItemNbtString;
+    @SerializedName("can_grindstone_remove_enchantment")
+    private boolean grindingEnabled;
+    @SerializedName("grinding_xp_multiplier")
+    private double grindingXpMultiplier;
 
     private transient CompoundTag secondaryItemNbt;
 
@@ -58,6 +62,8 @@ public class NotchifyConfig {
         secondaryItemNbtEnabled = false;
         secondaryItemNbtString = "{}";
         secondaryItemNbt = null;
+        grindingEnabled = true;
+        grindingXpMultiplier = 0.1D;
     }
 
     public boolean isAnvilEnabled() {
@@ -125,5 +131,13 @@ public class NotchifyConfig {
                 secondaryItemNbt = new CompoundTag();
             }
         return secondaryItemNbt;
+    }
+
+    public boolean isGrindingEnabled() {
+        return grindingEnabled;
+    }
+
+    public double getGrindingXpMultiplier() {
+        return grindingXpMultiplier;
     }
 }

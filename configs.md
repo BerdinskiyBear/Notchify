@@ -56,5 +56,12 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
     Symbols `"` and `\ ` must be escaped. For example data tag `{Potion: "minecraft:strong_regeneration"}` has to be
     written `"{Potion: \"minecraft:strong_regeneration\"}"`.
     * Default value: `"{}"`
+16. ##### `can_grindstone_remove_enchantment`
+    This setting allows one to toggle the ability to remove enchantment from the enchanted golden apple.
+    Why would you need that I don't now. But curses from poorly enchanted apple can be removed this way.
+    * Default value: `true`
+17. ##### `grinding_xp_multiplier`
+    This multiplier changes the maximum amount of experience (points, not levels) that can be obtained from one enchanted golden apple.
+    * Default value: `0.1`
     
 If one or several of these parameters are not present, default value for missing parameters will be used.

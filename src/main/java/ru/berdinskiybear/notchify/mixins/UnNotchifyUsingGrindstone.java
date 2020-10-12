@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.berdinskiybear.notchify.NotchifyMod;
 
 @Mixin(GrindstoneScreenHandler.class)
 public abstract class UnNotchifyUsingGrindstone extends ScreenHandler {
@@ -24,12 +25,14 @@ public abstract class UnNotchifyUsingGrindstone extends ScreenHandler {
 
     @Inject(method = "updateResult", at = @At(value = "HEAD"), cancellable = true)
     public void unnotchification(CallbackInfo callbackInfo) {
-        ItemStack itemStack1 = this.input.getStack(0);
-        ItemStack itemStack2 = this.input.getStack(1);
-        if ((itemStack1.isEmpty() && itemStack2.getItem() == Items.ENCHANTED_GOLDEN_APPLE) || (itemStack2.isEmpty() && itemStack1.getItem() == Items.ENCHANTED_GOLDEN_APPLE)) {
-            this.result.setStack(0, new ItemStack(Items.GOLDEN_APPLE, itemStack1.isEmpty() ? itemStack2.getCount() : itemStack1.getCount()));
-            this.sendContentUpdates();
-            callbackInfo.cancel();
+        if (NotchifyMod.getConfig().isGrindingEnabled()) {
+            ItemStack itemStack1 = this.input.getStack(0);
+            ItemStack itemStack2 = this.input.getStack(1);
+            if ((itemStack1.isEmpty() && itemStack2.getItem() == Items.ENCHANTED_GOLDEN_APPLE) || (itemStack2.isEmpty() && itemStack1.getItem() == Items.ENCHANTED_GOLDEN_APPLE)) {
+                this.result.setStack(0, new ItemStack(Items.GOLDEN_APPLE, itemStack1.isEmpty() ? itemStack2.getCount() : itemStack1.getCount()));
+                this.sendContentUpdates();
+                callbackInfo.cancel();
+            }
         }
     }
 }
