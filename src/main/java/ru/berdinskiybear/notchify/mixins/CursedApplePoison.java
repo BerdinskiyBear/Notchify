@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ru.berdinskiybear.notchify.NotchifyMod;
 
 @Mixin(LivingEntity.class)
 public abstract class CursedApplePoison extends Entity {
@@ -23,7 +24,7 @@ public abstract class CursedApplePoison extends Entity {
 
     @Inject(method = "applyFoodEffects", at = @At(value = "HEAD"))
     public void applyCursedApplePoison(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo callbackInfo) {
-        if (!world.isClient() && stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(stack).containsKey(Enchantments.VANISHING_CURSE)) {
+        if (!world.isClient() && NotchifyMod.getConfig().canCursedApplePoison() && stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(stack).containsKey(Enchantments.VANISHING_CURSE)) {
             targetEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 3000));
         }
     }

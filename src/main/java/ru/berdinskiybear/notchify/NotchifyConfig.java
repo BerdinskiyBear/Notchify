@@ -42,6 +42,8 @@ public class NotchifyConfig {
     private boolean grindingEnabled;
     @SerializedName("grinding_xp_multiplier")
     private double grindingXpMultiplier;
+    @SerializedName("will_cursed_apple_poison")
+    private boolean cursedApplePoison;
 
     private transient CompoundTag secondaryItemNbt;
 
@@ -64,6 +66,7 @@ public class NotchifyConfig {
         secondaryItemNbt = null;
         grindingEnabled = true;
         grindingXpMultiplier = 0.1D;
+        cursedApplePoison = true;
     }
 
     public boolean isAnvilEnabled() {
@@ -139,5 +142,9 @@ public class NotchifyConfig {
 
     public double getGrindingXpMultiplier() {
         return grindingXpMultiplier;
+    }
+
+    public boolean canCursedApplePoison() {
+        return cursedApplePoison;
     }
 }

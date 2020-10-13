@@ -53,7 +53,7 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
 15. ##### `anvil_secondary_item_nbt`
     This string contains a text representation of a compound tag with tags that secondary item must have in its
     [data](https://minecraft.gamepedia.com/Player.dat_format#General_Tags) [tag](https://minecraft.gamepedia.com/Commands#Data_tags).
-    Symbols `"` and `\ ` must be escaped. For example data tag `{Potion: "minecraft:strong_regeneration"}` has to be
+    Symbols `"` and `\ ` must be escaped. For example data tag `{Potion: "minecraft:strong_regeneration"}` must be
     written `"{Potion: \"minecraft:strong_regeneration\"}"`.
     * Default value: `"{}"`
 16. ##### `can_grindstone_remove_enchantment`
@@ -63,5 +63,8 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
 17. ##### `grinding_xp_multiplier`
     This multiplier changes the maximum amount of experience (points, not levels) that can be obtained from one enchanted golden apple.
     * Default value: `0.1`
+18. ##### `will_cursed_apple_poison`
+    This parameter toggles the nausea effect one gets after eating cursed enchanted apple.
+    * Default value: `true`
     
 If one or several of these parameters are not present, default value for missing parameters will be used.
