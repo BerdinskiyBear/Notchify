@@ -127,7 +127,7 @@ public class NotchifyConfig {
             try {
                 secondaryItemNbt = StringNbtReader.parse(secondaryItemNbtString);
             } catch (CommandSyntaxException e) {
-                NotchifyMod.log(Level.ERROR, "Error parsing NBT tag" + e.getMessage());
+                NotchifyMod.log(Level.ERROR, "Error parsing NBT tag: " + e.getMessage());
                 secondaryItemNbt = new CompoundTag();
             }
         return secondaryItemNbt;
