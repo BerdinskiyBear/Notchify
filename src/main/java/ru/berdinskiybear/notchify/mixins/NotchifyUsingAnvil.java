@@ -67,7 +67,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                         newApple.setCustomName(leftStack.getName());
 
                     this.output.setStack(0, newApple);
-                    this.levelCost.set(NotchifyMod.getConfig().getEGAppleEnchantmentCost());
+                    this.levelCost.set(NotchifyMod.getConfig().getAppleEnchantmentCost());
                 } else {
                     this.output.setStack(0, ItemStack.EMPTY);
                     this.levelCost.set(0);

@@ -25,7 +25,7 @@ public class NotchifyConfig {
     @SerializedName("vanishing_chance")
     private double vanishingChance;
     @SerializedName("can_enchanted_golden_apple_become_cursed")
-    private boolean canEGApplesBecomeCursed;
+    private boolean canApplesBecomeCursed;
     @SerializedName("chance_of_curse")
     private double curseChance;
     @SerializedName("anvil_requires_secondary_item")
@@ -54,7 +54,7 @@ public class NotchifyConfig {
         enchantingChanceModifier = 1.0D;
         canGoldenAppleVanish = true;
         vanishingChance = 0.9D;
-        canEGApplesBecomeCursed = true;
+        canApplesBecomeCursed = true;
         curseChance = 0.1D;
         secondaryItemRequired = true;
         secondaryItemID = "minecraft:nether_star";
@@ -74,7 +74,7 @@ public class NotchifyConfig {
         return enableEnchantingTable;
     }
 
-    public int getEGAppleEnchantmentCost() {
+    public int getAppleEnchantmentCost() {
         return egappleEnchantmentCost;
     }
 
@@ -98,8 +98,8 @@ public class NotchifyConfig {
         return vanishingChance;
     }
 
-    public boolean canEGApplesBecomeCursed() {
-        return canEGApplesBecomeCursed;
+    public boolean canApplesBecomeCursed() {
+        return canApplesBecomeCursed;
     }
 
     public double getCurseChance() {

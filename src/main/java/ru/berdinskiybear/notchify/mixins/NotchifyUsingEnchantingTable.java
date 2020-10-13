@@ -117,7 +117,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
-                        float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getConfig().getEnchantingChanceModifier()) / (NotchifyMod.getConfig().getEGAppleEnchantmentCost() * 10.0D));
+                        float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getConfig().getEnchantingChanceModifier()) / (NotchifyMod.getConfig().getAppleEnchantmentCost() * 10.0D));
 
                         player.applyEnchantmentCosts(null, button);
 
@@ -134,7 +134,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                             if (enchantingStack.hasCustomName())
                                 newApple.setCustomName(enchantingStack.getName());
 
-                            if (NotchifyMod.getConfig().canEGApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getConfig().getCurseChance())) {
+                            if (NotchifyMod.getConfig().canApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getConfig().getCurseChance())) {
                                 newApple.addEnchantment(Enchantments.VANISHING_CURSE, 1);
                             }
 
