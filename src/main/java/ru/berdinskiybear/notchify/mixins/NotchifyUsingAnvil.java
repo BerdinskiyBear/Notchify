@@ -3,6 +3,7 @@ package ru.berdinskiybear.notchify.mixins;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.screen.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -35,14 +36,24 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
             if (leftStack.getItem() == Items.GOLDEN_APPLE && leftStack.getCount() == 1 && (StringUtils.isBlank(this.newItemName) || (leftStack.hasCustomName() && leftStack.getName().asString().equals(this.newItemName)))) {
                 ItemStack rightStack = this.input.getStack(1);
 
-                // если либо предмет справа необходим и он как в настройках и он один, либо предмет справа не нужен и предмет справа отсутствует
-                if ((NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getConfig().getSecondaryItemID())) && rightStack.getCount() == 1) || (!NotchifyMod.getConfig().isSecondaryItemRequired() && rightStack.isEmpty())) {
+                if ( // если
+                        ( // либо
+                                NotchifyMod.getConfig().isSecondaryItemRequired() // второй предмет необходим
+                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getConfig().getSecondaryItemID())) // и предмет как в настройках
+                                        && rightStack.getCount() == NotchifyMod.getConfig().getSecondaryItemAmount() // и предметов количество как в настройках
+                                        && (!NotchifyMod.getConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
+                                                        || NbtHelper.matches(NotchifyMod.getConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
+                        ) || ( // либо
+                                !NotchifyMod.getConfig().isSecondaryItemRequired() // второй предмет не нужен
+                                        && rightStack.isEmpty() // и второго предмета нет
+                        )
+                ) {
                     ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
                     if (leftStack.hasCustomName())
                         newApple.setCustomName(leftStack.getName());
 
                     this.output.setStack(0, newApple);
-                    this.levelCost.set(NotchifyMod.getConfig().getEGAppleEnchantmentCost());
+                    this.levelCost.set(NotchifyMod.getConfig().getAppleEnchantmentCost());
                 } else {
                     this.output.setStack(0, ItemStack.EMPTY);
                     this.levelCost.set(0);

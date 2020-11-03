@@ -4,7 +4,12 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "NotchifyUsingAnvil",
-    "NotchifyUsingEnchantingTable"
+    "NotchifyUsingEnchantingTable",
+    "UnNotchifyUsingGrindstone",
+    "UnNotchifyUsingGrindstoneInsertion",
+    "UnNotchifyUsingGrindstoneExperience",
+    "CursedApplePoison",
+    "CursedApplePoisonsHorses"
   ],
   "client": [],
   "server": [],
