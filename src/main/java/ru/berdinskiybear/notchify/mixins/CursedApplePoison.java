@@ -20,7 +20,7 @@ public class CursedApplePoison {
     public void applyCursedApplePoison(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo callbackInfo) {
         if (!world.isClient() && NotchifyMod.getConfig().canCursedApplePoison() && stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(stack).containsKey(Enchantments.VANISHING_CURSE)) {
             for (StatusEffectInstance effect : NotchifyMod.getConfig().getStatusEffectInstances())
-                targetEntity.addStatusEffect(effect);
+                targetEntity.addStatusEffect(new StatusEffectInstance(effect));
         }
     }
 }
