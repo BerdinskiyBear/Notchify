@@ -2,8 +2,12 @@ package ru.berdinskiybear.notchify;
 
 import com.google.gson.annotations.SerializedName;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 
 public class NotchifyConfig {
@@ -44,8 +48,11 @@ public class NotchifyConfig {
     private double grindingXpMultiplier;
     @SerializedName("will_cursed_apple_poison")
     private boolean cursedApplePoison;
+    @SerializedName("cursed_apple_poison_effects")
+    private StatusEffectInstanceRepresentation[] statusEffectInstanceRepresentations;
 
     private transient CompoundTag secondaryItemNbt;
+    private transient StatusEffectInstance[] statusEffectInstances;
 
     public NotchifyConfig() {
         enableAnvil = true;
@@ -67,6 +74,8 @@ public class NotchifyConfig {
         grindingEnabled = true;
         grindingXpMultiplier = 0.1D;
         cursedApplePoison = true;
+        statusEffectInstanceRepresentations = new StatusEffectInstanceRepresentation[]{new StatusEffectInstanceRepresentation(new StatusEffectInstance(StatusEffects.NAUSEA, 3000))};
+        statusEffectInstances = null;
     }
 
     public boolean isAnvilEnabled() {
@@ -146,5 +155,50 @@ public class NotchifyConfig {
 
     public boolean canCursedApplePoison() {
         return cursedApplePoison;
+    }
+
+    public StatusEffectInstance[] getStatusEffectInstances() {
+        if (statusEffectInstances == null) {
+            if (statusEffectInstanceRepresentations == null || statusEffectInstanceRepresentations.length == 0) {
+                NotchifyMod.log(Level.WARN, "Should cursed apple poisoning be disabled? There are no effects defined in the config file.");
+                statusEffectInstances = new StatusEffectInstance[0];
+                cursedApplePoison = false;
+            } else {
+                statusEffectInstances = new StatusEffectInstance[statusEffectInstanceRepresentations.length];
+                for (int i = 0; i < statusEffectInstanceRepresentations.length; i++) {
+                    statusEffectInstances[i] = statusEffectInstanceRepresentations[i].createStatusEffectInstance();
+                }
+            }
+        }
+        return statusEffectInstances;
+    }
+
+
+    public static class StatusEffectInstanceRepresentation {
+        private String statusEffectId;
+        private int duration;
+        private int amplifier;
+
+        public StatusEffectInstanceRepresentation() {
+            statusEffectId = "";
+            duration = 0;
+            amplifier = 0;
+        }
+
+        public StatusEffectInstanceRepresentation(StatusEffectInstance instance) {
+            statusEffectId = Registry.STATUS_EFFECT.getId(instance.getEffectType()).toString();
+            duration = instance.getDuration();
+            amplifier = instance.getAmplifier();
+        }
+
+        public StatusEffectInstance createStatusEffectInstance() {
+            Identifier id = new Identifier(statusEffectId);
+            if (Registry.STATUS_EFFECT.containsId(id))
+                return new StatusEffectInstance(Registry.STATUS_EFFECT.get(id), duration, amplifier);
+            else {
+                NotchifyMod.log(Level.ERROR, "There are no effect with id \"" + statusEffectId + "\"");
+                return new StatusEffectInstance(StatusEffects.SLOWNESS, 0, 0, false, false);
+            }
+        }
     }
 }
