@@ -1,6 +1,7 @@
 ## Configurations info
 In this document you can find description for configuration parameters in configuration file for **Notchify** mod.
-Configuration file usually can be found in `.minecraft/config` folder and this file is called `notchify.json`.
+Configuration file is a JSON file. It usually can be found in `.minecraft/config` folder and this file is called `notchify.json`.
+All the configurable parameters:
 1. ##### `enable_enchanting_using_anvil`
     Allows to enable or disable enchanting of golden apples using anvils. If set to `true` enchanting using anvils is enabled, if set to `false` enchanting of golden apples using anvil is disabled.
    * Default value: `true`
@@ -15,7 +16,7 @@ To circumvent this issue I suggest using [Anvil Fix Mod](https://www.curseforge.
     * Default value: `39`
 4. ##### `creative_player_always_succeeds`
     If set to `true` creative players will always succeed when enchanting a golden apple on the enchantment table.
-If set to `false` creative players will have same chance of enchanting a golden apple.
+If set to `false` creative players will have same chance of enchanting a golden apple as other players.
     * Default value: `true`
 5. ##### `survival_player_always_succeeds`
     If set to `true` ANY PLAYER will have 100% chance enchanting a golden apple on the enchantment table.
@@ -64,7 +65,19 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
     This multiplier changes the maximum amount of experience (points, not levels) that can be obtained from one enchanted golden apple.
     * Default value: `0.1`
 18. ##### `will_cursed_apple_poison`
-    This parameter toggles the nausea effect one gets after eating cursed enchanted apple.
+    This parameter enables side effects one gets after eating cursed enchanted apple.
     * Default value: `true`
+19. ##### `cursed_apple_poison_effects`
+    This list contains all the effects that cursed enchanted golden apple will give the consumer of apple.
+    The list (square brackets) describes every status (potion) effect (curly brackets) in three parameters:
+    * `"statusEffectId"` is a string with a namespaced ID of the status effect;
+        * (Default value: `""`);
+    * `"duration"` is an integer that tells the duration of the effect **in game ticks** (20 game ticks = 1 second)
+        * (Default value: `0`);
+    * `"amplifier"` is an integer that tells the level of the effect. Starts at `0`, so for level 3 effect this value would be `2`.
+        * (Default value: `0`);
+
+    If ID parameter of an effect is incorrect, empty or missing, that effect would be ignored.
+    * Default value: `[{"statusEffectId": "minecraft:nausea", "duration": 3000, "amplifier": 0}]`
     
-If one or several of these parameters are not present, default value for missing parameters will be used.
+If one or several of these parameters or subparameters are not present, default value for missing parameters will be used.
