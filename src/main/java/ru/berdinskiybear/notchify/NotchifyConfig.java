@@ -140,8 +140,12 @@ public class NotchifyConfig {
                 secondaryItemNbt = StringNbtReader.parse(secondaryItemNbtString);
             } catch (CommandSyntaxException e) {
                 NotchifyMod.log(Level.ERROR, "Error parsing NBT tag: " + e.getMessage());
-                secondaryItemNbt = new CompoundTag();
+                return new CompoundTag();
             }
+        if (secondaryItemNbt.isEmpty()) {
+            NotchifyMod.log(Level.WARN, "Should secondary anvil item require NBT tag? Compound tag defined in config file is empty, thus always matches any item.");
+            secondaryItemNbtEnabled = false;
+        }
         return secondaryItemNbt;
     }
 
