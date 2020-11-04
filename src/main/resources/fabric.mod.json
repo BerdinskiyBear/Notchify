@@ -27,6 +27,8 @@
   },
   "recommends": {
     "fabric": "*",
-    "anvil_fix": "*"
+    "anvil_fix": "*",
+    "modmenu": "*",
+    "cloth-config2": ">=4"
   }
 }
