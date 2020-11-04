@@ -24,7 +24,7 @@ public abstract class CursedApplePoisonsHorses extends AnimalEntity {
 
     @Inject(method = "receiveFood", at = @At(value = "HEAD"))
     public void applyCursedApplePoison(PlayerEntity player, ItemStack item, CallbackInfoReturnable<Boolean> cir) {
-        if (!this.world.isClient() && NotchifyMod.getCurrentConfig().canCursedApplePoison() && item.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(item).containsKey(Enchantments.VANISHING_CURSE)) {
+        if (!this.world.isClient() && NotchifyMod.getCurrentConfig().isCursedApplePoisonous() && item.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(item).containsKey(Enchantments.VANISHING_CURSE)) {
             for (StatusEffectInstance effect : NotchifyMod.getCurrentConfig().getStatusEffectInstances())
                 this.addStatusEffect(new StatusEffectInstance(effect));
         }

@@ -134,7 +134,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                             if (enchantingStack.hasCustomName())
                                 newApple.setCustomName(enchantingStack.getName());
 
-                            if (NotchifyMod.getCurrentConfig().canApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getCurrentConfig().getCurseChance())) {
+                            if (NotchifyMod.getCurrentConfig().isAppleBecomingCursed() && (this.random.nextFloat() < NotchifyMod.getCurrentConfig().getCurseChance())) {
                                 newApple.addEnchantment(Enchantments.VANISHING_CURSE, 1);
                             }
 
@@ -147,7 +147,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
                         } else {
-                            if (NotchifyMod.getCurrentConfig().canGoldenAppleVanish() && (this.random.nextFloat() < (NotchifyMod.getCurrentConfig().getVanishingChance() * (this.enchantmentPower[id] / 30.0F)))) {
+                            if (NotchifyMod.getCurrentConfig().isGoldenAppleDisappearing() && (this.random.nextFloat() < (NotchifyMod.getCurrentConfig().getVanishingChance() * (this.enchantmentPower[id] / 30.0F)))) {
                                 this.inventory.setStack(0, ItemStack.EMPTY);
                             }
 

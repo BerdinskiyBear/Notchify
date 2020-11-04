@@ -9,33 +9,34 @@ import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class NotchifyConfig {
 
     @SerializedName("enable_enchanting_using_anvil")
-    private boolean enableAnvil;
+    private boolean anvilEnabled;
     @SerializedName("enable_enchanting_using_enchanting_table")
-    private boolean enableEnchantingTable;
+    private boolean enchantingTableEnabled;
     @SerializedName("enchanted_golden_apple_cost")
-    private int egappleEnchantmentCost;
+    private int appleEnchantmentCost;
     @SerializedName("creative_player_always_succeeds")
-    private boolean creativePlayerAlwaysSucceeds;
+    private boolean creativePlayerAlwaysSuccessful;
     @SerializedName("survival_player_always_succeeds")
-    private boolean survivalPlayerAlwaysSucceeds;
+    private boolean survivalPlayerAlwaysSuccessful;
     @SerializedName("enchanting_chance_modifier")
     private double enchantingChanceModifier;
     @SerializedName("can_golden_apple_vanish")
-    private boolean canGoldenAppleVanish;
+    private boolean goldenAppleDisappearing;
     @SerializedName("vanishing_chance")
     private double vanishingChance;
     @SerializedName("can_enchanted_golden_apple_become_cursed")
-    private boolean canApplesBecomeCursed;
+    private boolean appleBecomingCursed;
     @SerializedName("chance_of_curse")
     private double curseChance;
     @SerializedName("anvil_requires_secondary_item")
     private boolean secondaryItemRequired;
     @SerializedName("anvil_secondary_item_id")
-    private String secondaryItemID;
+    private String secondaryItemId;
     @SerializedName("anvil_secondary_item_amount")
     private int secondaryItemAmount;
     @SerializedName("anvil_secondary_item_nbt_enabled")
@@ -47,7 +48,7 @@ public class NotchifyConfig {
     @SerializedName("grinding_xp_multiplier")
     private double grindingXpMultiplier;
     @SerializedName("will_cursed_apple_poison")
-    private boolean cursedApplePoison;
+    private boolean cursedApplePoisonous;
     @SerializedName("cursed_apple_poison_effects")
     private StatusEffectInstanceRepresentation[] statusEffectInstanceRepresentations;
 
@@ -55,83 +56,149 @@ public class NotchifyConfig {
     private transient StatusEffectInstance[] statusEffectInstances;
 
     public NotchifyConfig() {
-        enableAnvil = true;
-        enableEnchantingTable = true;
-        egappleEnchantmentCost = 39;
-        creativePlayerAlwaysSucceeds = true;
-        survivalPlayerAlwaysSucceeds = false;
+        anvilEnabled = true;
+        enchantingTableEnabled = true;
+        appleEnchantmentCost = 39;
+        creativePlayerAlwaysSuccessful = true;
+        survivalPlayerAlwaysSuccessful = false;
         enchantingChanceModifier = 1.0D;
-        canGoldenAppleVanish = true;
+        goldenAppleDisappearing = true;
         vanishingChance = 0.9D;
-        canApplesBecomeCursed = true;
+        appleBecomingCursed = true;
         curseChance = 0.1D;
         secondaryItemRequired = true;
-        secondaryItemID = "minecraft:nether_star";
+        secondaryItemId = "minecraft:nether_star";
         secondaryItemAmount = 1;
         secondaryItemNbtEnabled = false;
         secondaryItemNbtString = "{}";
         secondaryItemNbt = null;
         grindingEnabled = true;
         grindingXpMultiplier = 0.1D;
-        cursedApplePoison = true;
+        cursedApplePoisonous = true;
         statusEffectInstanceRepresentations = new StatusEffectInstanceRepresentation[]{new StatusEffectInstanceRepresentation(new StatusEffectInstance(StatusEffects.NAUSEA, 3000))};
         statusEffectInstances = null;
     }
 
+    public void setAnvilEnabled(boolean anvilEnabled) {
+        this.anvilEnabled = anvilEnabled;
+    }
+
     public boolean isAnvilEnabled() {
-        return enableAnvil;
+        return anvilEnabled;
+    }
+
+    public void setEnchantingTableEnabled(boolean enchantingTableEnabled) {
+        this.enchantingTableEnabled = enchantingTableEnabled;
     }
 
     public boolean isEnchantingTableEnabled() {
-        return enableEnchantingTable;
+        return enchantingTableEnabled;
+    }
+
+    public void setAppleEnchantmentCost(int appleEnchantmentCost) {
+        this.appleEnchantmentCost = appleEnchantmentCost;
     }
 
     public int getAppleEnchantmentCost() {
-        return egappleEnchantmentCost;
+        return appleEnchantmentCost;
+    }
+
+    public void setCreativePlayerAlwaysSuccessful(boolean creativePlayerAlwaysSuccessful) {
+        this.creativePlayerAlwaysSuccessful = creativePlayerAlwaysSuccessful;
     }
 
     public boolean isCreativePlayerAlwaysSuccessful() {
-        return creativePlayerAlwaysSucceeds;
+        return creativePlayerAlwaysSuccessful;
+    }
+
+    public void setSurvivalPlayerAlwaysSuccessful(boolean survivalPlayerAlwaysSuccessful) {
+        this.survivalPlayerAlwaysSuccessful = survivalPlayerAlwaysSuccessful;
     }
 
     public boolean isSurvivalPlayerAlwaysSuccessful() {
-        return survivalPlayerAlwaysSucceeds;
+        return survivalPlayerAlwaysSuccessful;
+    }
+
+    public void setEnchantingChanceModifier(double enchantingChanceModifier) {
+        this.enchantingChanceModifier = enchantingChanceModifier;
     }
 
     public double getEnchantingChanceModifier() {
         return enchantingChanceModifier;
     }
 
-    public boolean canGoldenAppleVanish() {
-        return canGoldenAppleVanish;
+    public void setGoldenAppleDisappearing(boolean goldenAppleDisappearing) {
+        this.goldenAppleDisappearing = goldenAppleDisappearing;
+    }
+
+    public boolean isGoldenAppleDisappearing() {
+        return goldenAppleDisappearing;
+    }
+
+    public void setVanishingChance(double vanishingChance) {
+        this.vanishingChance = vanishingChance;
     }
 
     public double getVanishingChance() {
         return vanishingChance;
     }
 
-    public boolean canApplesBecomeCursed() {
-        return canApplesBecomeCursed;
+    public void setAppleBecomingCursed(boolean appleBecomingCursed) {
+        this.appleBecomingCursed = appleBecomingCursed;
+    }
+
+    public boolean isAppleBecomingCursed() {
+        return appleBecomingCursed;
+    }
+
+    public void setCurseChance(double curseChance) {
+        this.curseChance = curseChance;
     }
 
     public double getCurseChance() {
         return curseChance;
     }
 
+    public void setSecondaryItemRequired(boolean secondaryItemRequired) {
+        this.secondaryItemRequired = secondaryItemRequired;
+    }
+
     public boolean isSecondaryItemRequired() {
         return secondaryItemRequired;
     }
 
-    public String getSecondaryItemID() {
-        return secondaryItemID;
+    public void setSecondaryItemId(String secondaryItemId) {
+        this.secondaryItemId = secondaryItemId;
+    }
+
+    public String getSecondaryItemId() {
+        return secondaryItemId;
+    }
+
+    public void setSecondaryItemAmount(int secondaryItemAmount) {
+        this.secondaryItemAmount = secondaryItemAmount;
     }
 
     public int getSecondaryItemAmount() {
         return secondaryItemAmount;
     }
 
+    public void setSecondaryItemNbtEnabled(boolean secondaryItemNbtEnabled) {
+        this.secondaryItemNbtEnabled = secondaryItemNbtEnabled;
+    }
+
     public boolean isSecondaryItemNbtEnabled() {
         return secondaryItemNbtEnabled;
+    }
+
+    public void setSecondaryItemNbt(@NotNull CompoundTag secondaryItemNbt) {
+        this.secondaryItemNbt = secondaryItemNbt.copy();
+        this.secondaryItemNbtString = this.secondaryItemNbt.toString();
+    }
+
+    public void setSecondaryItemNbt(String secondaryItemNbtString) {
+        this.secondaryItemNbtString = secondaryItemNbtString;
+        this.secondaryItemNbt = null;
     }
 
     public CompoundTag getSecondaryItemNbt() {
@@ -149,16 +216,28 @@ public class NotchifyConfig {
         return secondaryItemNbt;
     }
 
+    public void setGrindingEnabled(boolean grindingEnabled) {
+        this.grindingEnabled = grindingEnabled;
+    }
+
     public boolean isGrindingEnabled() {
         return grindingEnabled;
+    }
+
+    public void setGrindingXpMultiplier(double grindingXpMultiplier) {
+        this.grindingXpMultiplier = grindingXpMultiplier;
     }
 
     public double getGrindingXpMultiplier() {
         return grindingXpMultiplier;
     }
 
-    public boolean canCursedApplePoison() {
-        return cursedApplePoison;
+    public void setCursedApplePoisonous(boolean cursedApplePoisonous) {
+        this.cursedApplePoisonous = cursedApplePoisonous;
+    }
+
+    public boolean isCursedApplePoisonous() {
+        return cursedApplePoisonous;
     }
 
     public StatusEffectInstance[] getStatusEffectInstances() {
@@ -166,7 +245,7 @@ public class NotchifyConfig {
             if (statusEffectInstanceRepresentations == null || statusEffectInstanceRepresentations.length == 0) {
                 NotchifyMod.log(Level.WARN, "Should cursed apple poisoning be disabled? There are no effects defined in the config file.");
                 statusEffectInstances = new StatusEffectInstance[0];
-                cursedApplePoison = false;
+                cursedApplePoisonous = false;
             } else {
                 statusEffectInstances = new StatusEffectInstance[statusEffectInstanceRepresentations.length];
                 for (int i = 0; i < statusEffectInstanceRepresentations.length; i++) {
@@ -176,7 +255,6 @@ public class NotchifyConfig {
         }
         return statusEffectInstances;
     }
-
 
     public static class StatusEffectInstanceRepresentation {
         private String statusEffectId;

@@ -39,7 +39,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                 if ( // если
                         ( // либо
                                 NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет необходим
-                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getCurrentConfig().getSecondaryItemID())) // и предмет как в настройках
+                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getCurrentConfig().getSecondaryItemId())) // и предмет как в настройках
                                         && rightStack.getCount() == NotchifyMod.getCurrentConfig().getSecondaryItemAmount() // и предметов количество как в настройках
                                         && (!NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
                                                         || NbtHelper.matches(NotchifyMod.getCurrentConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
