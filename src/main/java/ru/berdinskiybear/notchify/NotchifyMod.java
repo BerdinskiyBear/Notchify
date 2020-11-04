@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -19,14 +20,13 @@ public class NotchifyMod implements ModInitializer {
 
     public static final String MOD_ID = "notchify";
     public static final String MOD_NAME = "Notchify";
-    public static final String FABRIC_ID = "fabric";
 
     private static NotchifyConfig currentConfig;
 
     @Override
     public void onInitialize() {
-        loadConfig();
-        if (FabricLoader.getInstance().isModLoaded(FABRIC_ID)) {
+        loadConfigFile();
+        if (FabricLoader.getInstance().isModLoaded("fabric")) {
             NotchifyConfigReloader.register();
         }
     }
@@ -39,31 +39,50 @@ public class NotchifyMod implements ModInitializer {
         NotchifyMod.log(Level.INFO, message);
     }
 
-    public static void loadConfig() {
-        log("Loading config...");
+    public static void loadConfigFile() {
+        setCurrentConfig(readOrCreateConfigFile());
+    }
+
+    public static NotchifyConfig readOrCreateConfigFile() {
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         File configFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), MOD_ID + ".json");
+        NotchifyConfig config = new NotchifyConfig();
         if (configFile.exists()) {
             try (FileReader fileReader = new FileReader(configFile)) {
-                currentConfig = gson.fromJson(fileReader, NotchifyConfig.class);
+                config = gson.fromJson(fileReader, NotchifyConfig.class);
             } catch (IOException exception) {
                 log(Level.ERROR, "Unable to read the config file");
-                log(Level.ERROR, exception.getLocalizedMessage());
-                currentConfig = new NotchifyConfig();
             }
         } else {
             log(Level.WARN, "No config file found, creating new one");
-            currentConfig = new NotchifyConfig();
-            try (FileWriter fileWriter = new FileWriter(configFile)) {
-                gson.toJson(currentConfig, fileWriter);
-            } catch (IOException exception) {
-                log(Level.ERROR, "Unable to create and/or write config file " + configFile.getAbsolutePath() + configFile.getName());
-                log(Level.ERROR, exception.getLocalizedMessage());
-            }
+            createNewConfigFile();
+        }
+        return config;
+    }
+
+    public static void writeConfigFile(NotchifyConfig config) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        File configFile = new File(FabricLoader.getInstance().getConfigDir().toFile(), MOD_ID + ".json");
+        try (FileWriter fileWriter = new FileWriter(configFile)) {
+            gson.toJson(config, fileWriter);
+        } catch (IOException exception) {
+            log(Level.ERROR, "Unable to create and/or write config file " + configFile.getAbsolutePath() + configFile.getName());
         }
     }
 
-    public static NotchifyConfig getConfig() {
+    public static void saveConfigFile() {
+        writeConfigFile(getCurrentConfig());
+    }
+
+    public static void createNewConfigFile() {
+        writeConfigFile(new NotchifyConfig());
+    }
+
+    public static void setCurrentConfig(NotchifyConfig config) {
+        currentConfig = config;
+    }
+
+    public static NotchifyConfig getCurrentConfig() {
         return currentConfig;
     }
 

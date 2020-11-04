@@ -25,7 +25,7 @@ public abstract class UnNotchifyUsingGrindstone extends ScreenHandler {
 
     @Inject(method = "updateResult", at = @At(value = "HEAD"), cancellable = true)
     public void unnotchification(CallbackInfo callbackInfo) {
-        if (NotchifyMod.getConfig().isGrindingEnabled()) {
+        if (NotchifyMod.getCurrentConfig().isGrindingEnabled()) {
             ItemStack itemStack1 = this.input.getStack(0);
             ItemStack itemStack2 = this.input.getStack(1);
             if ((itemStack1.isEmpty() && itemStack2.getItem() == Items.ENCHANTED_GOLDEN_APPLE) || (itemStack2.isEmpty() && itemStack1.getItem() == Items.ENCHANTED_GOLDEN_APPLE)) {

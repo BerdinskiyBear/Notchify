@@ -18,8 +18,8 @@ public class CursedApplePoison {
 
     @Inject(method = "applyFoodEffects", at = @At(value = "HEAD"))
     public void applyCursedApplePoison(ItemStack stack, World world, LivingEntity targetEntity, CallbackInfo callbackInfo) {
-        if (!world.isClient() && NotchifyMod.getConfig().canCursedApplePoison() && stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(stack).containsKey(Enchantments.VANISHING_CURSE)) {
-            for (StatusEffectInstance effect : NotchifyMod.getConfig().getStatusEffectInstances())
+        if (!world.isClient() && NotchifyMod.getCurrentConfig().canCursedApplePoison() && stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE && EnchantmentHelper.get(stack).containsKey(Enchantments.VANISHING_CURSE)) {
+            for (StatusEffectInstance effect : NotchifyMod.getCurrentConfig().getStatusEffectInstances())
                 targetEntity.addStatusEffect(new StatusEffectInstance(effect));
         }
     }

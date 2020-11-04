@@ -41,7 +41,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
     @Inject(method = "onContentChanged", at = @At(value = "HEAD"), cancellable = true)
     public void notchificationCalculations(Inventory inv, CallbackInfo info) {
-        if (NotchifyMod.getConfig().isEnchantingTableEnabled()) {
+        if (NotchifyMod.getCurrentConfig().isEnchantingTableEnabled()) {
             if (inv == this.inventory) {
                 ItemStack enchantingStack = inv.getStack(0);
                 if (enchantingStack.getItem() == Items.GOLDEN_APPLE && enchantingStack.getCount() == 1) {
@@ -106,7 +106,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
     @Inject(method = "onButtonClick", at = @At(value = "HEAD"), cancellable = true)
     public void notchification(PlayerEntity player, int id, CallbackInfoReturnable<Boolean> info) {
-        if (NotchifyMod.getConfig().isEnchantingTableEnabled()) {
+        if (NotchifyMod.getCurrentConfig().isEnchantingTableEnabled()) {
             ItemStack enchantingStack = this.inventory.getStack(0);
 
             if (enchantingStack.getItem() == Items.GOLDEN_APPLE && enchantingStack.getCount() == 1) {
@@ -117,7 +117,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed((long) (this.seed.get() + id + 3));
-                        float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getConfig().getEnchantingChanceModifier()) / (NotchifyMod.getConfig().getAppleEnchantmentCost() * 10.0D));
+                        float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getCurrentConfig().getEnchantingChanceModifier()) / (NotchifyMod.getCurrentConfig().getAppleEnchantmentCost() * 10.0D));
 
                         player.applyEnchantmentCosts(null, button);
 
@@ -128,13 +128,13 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                         }
 
                         // если либо игрок или удачлив, или в творческом режиме и настройки это допускают, либо все игроки всегда удачливы
-                        if ((this.random.nextFloat() < playerChance || (player.abilities.creativeMode && NotchifyMod.getConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getConfig().isSurvivalPlayerAlwaysSuccessful()) {
+                        if ((this.random.nextFloat() < playerChance || (player.abilities.creativeMode && NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getCurrentConfig().isSurvivalPlayerAlwaysSuccessful()) {
                             ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
 
                             if (enchantingStack.hasCustomName())
                                 newApple.setCustomName(enchantingStack.getName());
 
-                            if (NotchifyMod.getConfig().canApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getConfig().getCurseChance())) {
+                            if (NotchifyMod.getCurrentConfig().canApplesBecomeCursed() && (this.random.nextFloat() < NotchifyMod.getCurrentConfig().getCurseChance())) {
                                 newApple.addEnchantment(Enchantments.VANISHING_CURSE, 1);
                             }
 
@@ -147,7 +147,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
 
                             world.playSound(null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
                         } else {
-                            if (NotchifyMod.getConfig().canGoldenAppleVanish() && (this.random.nextFloat() < (NotchifyMod.getConfig().getVanishingChance() * (this.enchantmentPower[id] / 30.0F)))) {
+                            if (NotchifyMod.getCurrentConfig().canGoldenAppleVanish() && (this.random.nextFloat() < (NotchifyMod.getCurrentConfig().getVanishingChance() * (this.enchantmentPower[id] / 30.0F)))) {
                                 this.inventory.setStack(0, ItemStack.EMPTY);
                             }
 

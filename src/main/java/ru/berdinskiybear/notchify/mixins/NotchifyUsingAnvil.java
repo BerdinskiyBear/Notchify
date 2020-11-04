@@ -29,7 +29,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
 
     @Inject(method = "updateResult", at = @At(value = "HEAD"), cancellable = true)
     public void notchification(CallbackInfo info) {
-        if (NotchifyMod.getConfig().isAnvilEnabled()) {
+        if (NotchifyMod.getCurrentConfig().isAnvilEnabled()) {
             ItemStack leftStack = this.input.getStack(0);
 
             // если предмет слева - золотое яблоко, предмет слева один и либо поле ввода имени пустое, либо предмет слева имеет имя и оно совпадает с текстом в поле ввода
@@ -38,13 +38,13 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
 
                 if ( // если
                         ( // либо
-                                NotchifyMod.getConfig().isSecondaryItemRequired() // второй предмет необходим
-                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getConfig().getSecondaryItemID())) // и предмет как в настройках
-                                        && rightStack.getCount() == NotchifyMod.getConfig().getSecondaryItemAmount() // и предметов количество как в настройках
-                                        && (!NotchifyMod.getConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
-                                                        || NbtHelper.matches(NotchifyMod.getConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
+                                NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет необходим
+                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getCurrentConfig().getSecondaryItemID())) // и предмет как в настройках
+                                        && rightStack.getCount() == NotchifyMod.getCurrentConfig().getSecondaryItemAmount() // и предметов количество как в настройках
+                                        && (!NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
+                                                        || NbtHelper.matches(NotchifyMod.getCurrentConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
                         ) || ( // либо
-                                !NotchifyMod.getConfig().isSecondaryItemRequired() // второй предмет не нужен
+                                !NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет не нужен
                                         && rightStack.isEmpty() // и второго предмета нет
                         )
                 ) {
@@ -53,7 +53,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                         newApple.setCustomName(leftStack.getName());
 
                     this.output.setStack(0, newApple);
-                    this.levelCost.set(NotchifyMod.getConfig().getAppleEnchantmentCost());
+                    this.levelCost.set(NotchifyMod.getCurrentConfig().getAppleEnchantmentCost());
                 } else {
                     this.output.setStack(0, ItemStack.EMPTY);
                     this.levelCost.set(0);

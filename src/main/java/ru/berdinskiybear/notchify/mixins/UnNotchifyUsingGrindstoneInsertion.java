@@ -20,7 +20,7 @@ public class UnNotchifyUsingGrindstoneInsertion extends Slot {
     @Inject(method = "canInsert(Lnet/minecraft/item/ItemStack;)Z", at = @At(value = "HEAD"), cancellable = true)
     public void insertion(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
         if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE)
-            if (NotchifyMod.getConfig().isGrindingEnabled())
+            if (NotchifyMod.getCurrentConfig().isGrindingEnabled())
                 info.setReturnValue(true);
             else
                 info.setReturnValue(false);
