@@ -2,14 +2,21 @@ package ru.berdinskiybear.notchify;
 
 import com.google.gson.annotations.SerializedName;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
 
 public class NotchifyConfig {
 
@@ -52,8 +59,10 @@ public class NotchifyConfig {
     @SerializedName("cursed_apple_poison_effects")
     private StatusEffectInstanceRepresentation[] statusEffectInstanceRepresentations;
 
+    private transient Item secondaryItem;
     private transient CompoundTag secondaryItemNbt;
-    private transient StatusEffectInstance[] statusEffectInstances;
+    //private transient StatusEffectInstance[] statusEffectInstances;
+    private transient ArrayList<StatusEffectInstance> statusEffectInstances;
 
     public NotchifyConfig() {
         anvilEnabled = true;
@@ -67,10 +76,11 @@ public class NotchifyConfig {
         appleBecomingCursed = true;
         curseChance = 0.1D;
         secondaryItemRequired = true;
-        secondaryItemId = "minecraft:nether_star";
+        secondaryItemId = Registry.ITEM.getId(Items.NETHER_STAR).toString();
+        secondaryItem = null;
         secondaryItemAmount = 1;
         secondaryItemNbtEnabled = false;
-        secondaryItemNbtString = "{}";
+        secondaryItemNbtString = new CompoundTag().toString();
         secondaryItemNbt = null;
         grindingEnabled = true;
         grindingXpMultiplier = 0.1D;
@@ -167,12 +177,19 @@ public class NotchifyConfig {
         return secondaryItemRequired;
     }
 
-    public void setSecondaryItemId(String secondaryItemId) {
-        this.secondaryItemId = secondaryItemId;
+    public void setSecondaryItem(Item secondaryItem) {
+        this.secondaryItem = secondaryItem;
+        this.secondaryItemId = Registry.ITEM.getId(secondaryItem).toString();
     }
 
-    public String getSecondaryItemId() {
-        return secondaryItemId;
+    public Item getSecondaryItem() {
+        if (secondaryItem == null) {
+            if (Registry.ITEM.containsId(new Identifier(secondaryItemId)))
+                secondaryItem = Registry.ITEM.get(new Identifier(secondaryItemId));
+            else
+                NotchifyMod.log(Level.ERROR, "There are no item \"" + secondaryItemId + "\"!");
+        }
+        return secondaryItem;
     }
 
     public void setSecondaryItemAmount(int secondaryItemAmount) {
@@ -196,11 +213,6 @@ public class NotchifyConfig {
         this.secondaryItemNbtString = this.secondaryItemNbt.toString();
     }
 
-    public void setSecondaryItemNbt(String secondaryItemNbtString) {
-        this.secondaryItemNbtString = secondaryItemNbtString;
-        this.secondaryItemNbt = null;
-    }
-
     public CompoundTag getSecondaryItemNbt() {
         if (secondaryItemNbt == null)
             try {
@@ -210,7 +222,7 @@ public class NotchifyConfig {
                 return new CompoundTag();
             }
         if (secondaryItemNbt.isEmpty()) {
-            NotchifyMod.log(Level.WARN, "Should secondary anvil item require NBT tag? Compound tag defined in config file is empty, thus always matches any item.");
+            //NotchifyMod.log(Level.WARN, "Should secondary anvil item require NBT tag? Compound tag defined in config file is empty, thus always matches any item.");
             secondaryItemNbtEnabled = false;
         }
         return secondaryItemNbt;
@@ -240,20 +252,27 @@ public class NotchifyConfig {
         return cursedApplePoisonous;
     }
 
-    public StatusEffectInstance[] getStatusEffectInstances() {
+    public ArrayList<StatusEffectInstance> getStatusEffectInstances() {
         if (statusEffectInstances == null) {
+            statusEffectInstances = new ArrayList<>();
             if (statusEffectInstanceRepresentations == null || statusEffectInstanceRepresentations.length == 0) {
                 NotchifyMod.log(Level.WARN, "Should cursed apple poisoning be disabled? There are no effects defined in the config file.");
-                statusEffectInstances = new StatusEffectInstance[0];
                 cursedApplePoisonous = false;
             } else {
-                statusEffectInstances = new StatusEffectInstance[statusEffectInstanceRepresentations.length];
-                for (int i = 0; i < statusEffectInstanceRepresentations.length; i++) {
-                    statusEffectInstances[i] = statusEffectInstanceRepresentations[i].createStatusEffectInstance();
+                for (StatusEffectInstanceRepresentation representation : statusEffectInstanceRepresentations) {
+                    representation.createStatusEffectInstance().ifPresent(statusEffectInstances::add);
                 }
             }
         }
         return statusEffectInstances;
+    }
+
+    public void setStatusEffectInstances(ArrayList<StatusEffectInstance> statusEffectInstances) {
+        this.statusEffectInstances = statusEffectInstances;
+        this.statusEffectInstanceRepresentations = new StatusEffectInstanceRepresentation[this.statusEffectInstances.size()];
+        for (int i = 0; i < this.statusEffectInstanceRepresentations.length; i++) {
+            this.statusEffectInstanceRepresentations[i] = new StatusEffectInstanceRepresentation(this.statusEffectInstances.get(i));
+        }
     }
 
     public static class StatusEffectInstanceRepresentation {
@@ -262,9 +281,7 @@ public class NotchifyConfig {
         private int amplifier;
 
         public StatusEffectInstanceRepresentation() {
-            statusEffectId = "";
-            duration = 0;
-            amplifier = 0;
+            this(new StatusEffectInstance(StatusEffects.NAUSEA, 3000, 0));
         }
 
         public StatusEffectInstanceRepresentation(StatusEffectInstance instance) {
@@ -273,14 +290,67 @@ public class NotchifyConfig {
             amplifier = instance.getAmplifier();
         }
 
-        public StatusEffectInstance createStatusEffectInstance() {
+        public Optional<StatusEffectInstance> createStatusEffectInstance() {
             Identifier id = new Identifier(statusEffectId);
             if (Registry.STATUS_EFFECT.containsId(id))
-                return new StatusEffectInstance(Registry.STATUS_EFFECT.get(id), duration, amplifier);
+                return Optional.of(new StatusEffectInstance(Registry.STATUS_EFFECT.get(id), duration, amplifier));
             else {
                 NotchifyMod.log(Level.ERROR, "There are no effect with id \"" + statusEffectId + "\"");
-                return new StatusEffectInstance(StatusEffects.SLOWNESS, 0, 0, false, false);
+                return Optional.empty();
             }
+        }
+
+        public static ArrayList<StatusEffectInstanceRepresentation> representationsFrom(Collection<StatusEffectInstance> instances) {
+            ArrayList<StatusEffectInstanceRepresentation> representations = new ArrayList<>();
+            for (StatusEffectInstance instance : instances)
+                representations.add(new StatusEffectInstanceRepresentation(instance));
+            return representations;
+        }
+
+        public static ArrayList<StatusEffectInstance> instancesFrom(Collection<StatusEffectInstanceRepresentation> representations) {
+            ArrayList<StatusEffectInstance> instances = new ArrayList<>();
+            for (StatusEffectInstanceRepresentation representation : representations)
+                representation.createStatusEffectInstance().ifPresent(instances::add);
+            return instances;
+        }
+
+        public String getStatusEffectId() {
+            return statusEffectId;
+        }
+
+        public void setStatusEffectId(String statusEffectId) {
+            this.statusEffectId = statusEffectId;
+        }
+
+        public void setStatusEffect(StatusEffect effect) {
+            this.setStatusEffectId(Registry.STATUS_EFFECT.getId(effect).toString());
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public void setDuration(int duration) {
+            this.duration = duration;
+        }
+
+        public int getAmplifier() {
+            return amplifier;
+        }
+
+        public void setAmplifier(int amplifier) {
+            this.amplifier = amplifier;
+        }
+
+        public boolean equals(Object o) {
+            if (o.getClass() != this.getClass())
+                return false;
+            StatusEffectInstanceRepresentation oo = ((StatusEffectInstanceRepresentation) o);
+            if (oo.duration != this.duration)
+                return false;
+            if (oo.amplifier != this.amplifier)
+                return false;
+            return oo.statusEffectId.equals(this.statusEffectId);
         }
     }
 }

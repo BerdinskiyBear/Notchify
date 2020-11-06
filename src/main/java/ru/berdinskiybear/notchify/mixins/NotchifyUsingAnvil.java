@@ -5,8 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.screen.*;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +37,7 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                 if ( // если
                         ( // либо
                                 NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет необходим
-                                        && rightStack.getItem() == Registry.ITEM.get(new Identifier(NotchifyMod.getCurrentConfig().getSecondaryItemId())) // и предмет как в настройках
+                                        && rightStack.getItem() == NotchifyMod.getCurrentConfig().getSecondaryItem() // и предмет как в настройках
                                         && rightStack.getCount() == NotchifyMod.getCurrentConfig().getSecondaryItemAmount() // и предметов количество как в настройках
                                         && (!NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
                                                         || NbtHelper.matches(NotchifyMod.getCurrentConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
