@@ -53,6 +53,12 @@ public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListE
     }
 
     @Override
+    public void lateRender(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        if (this.expanded)
+            this.cells.forEach(cell -> cell.lateRender(matrices, mouseX, mouseY, delta));
+    }
+
+    @Override
     public void save() {
         for (MaybeNestedListCell<T, INNER> cell : cells)
             cell.nestedEntry.save();
@@ -131,6 +137,10 @@ public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListE
             super.onDelete();
             listListEntry.referencableEntries.remove(nestedEntry);
             listListEntry.requestReferenceRebuilding();
+        }
+
+        public void lateRender(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+            this.nestedEntry.lateRender(matrices, mouseX, mouseY, delta);
         }
     }
 }
