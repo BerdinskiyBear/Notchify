@@ -40,16 +40,11 @@ public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListE
                                     boolean deleteButtonEnabled,
                                     boolean insertInFront,
                                     BiFunction<T, MaybeNestedListListEntry<T, INNER>, INNER> createNewCell) {
-        super(fieldName, value, defaultExpanded, tooltipSupplier, null, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new MaybeNestedListCell<>(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
+        super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumerArg, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new MaybeNestedListCell<>(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
         for (MaybeNestedListCell<T, INNER> cell : cells) {
             referencableEntries.add(cell.nestedEntry);
         }
         setReferenceProviderEntries(referencableEntries);
-//        this.saveConsumer = (list) -> {
-//            cells.forEach(cell -> cell.nestedEntry.save());
-//            saveConsumerArg.accept(list);
-//        };
-        this.saveConsumer = saveConsumerArg;
     }
 
     @Override
