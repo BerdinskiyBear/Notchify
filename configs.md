@@ -1,6 +1,9 @@
 ## Configurations info
 In this document you can find description for configuration parameters in configuration file for **Notchify** mod.
+If this mod is installed on client, Notchify Mod Config menu is available via [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
+
 Configuration file is a JSON file. It usually can be found in `.minecraft/config` folder and this file is called `notchify.json`.
+If one or several of configurable parameters or subparameters are not present, default value for missing parameters will be used.
 All the configurable parameters:
 1. ##### `enable_enchanting_using_anvil`
     Allows to enable or disable enchanting of golden apples using anvils. If set to `true` enchanting using anvils is enabled, if set to `false` enchanting of golden apples using anvil is disabled.
@@ -71,13 +74,11 @@ For example, if you set this modifier to `6.5` 50% of all attempts will be succe
     This list contains all the effects that cursed enchanted golden apple will give the consumer of apple.
     The list (square brackets) describes every status (potion) effect (curly brackets) in three parameters:
     * `"statusEffectId"` is a string with a namespaced ID of the status effect;
-        * (Default value: `""`);
+        * Default value: `"minecraft:nausea"`
     * `"duration"` is an integer that tells the duration of the effect **in game ticks** (20 game ticks = 1 second)
-        * (Default value: `0`);
+        * Default value: `0`
     * `"amplifier"` is an integer that tells the level of the effect. Starts at `0`, so for level 3 effect this value would be `2`.
-        * (Default value: `0`);
+        * Default value: `0`
 
     If ID parameter of an effect is incorrect, empty or missing, that effect would be ignored.
     * Default value: `[{"statusEffectId": "minecraft:nausea", "duration": 3000, "amplifier": 0}]`
-    
-If one or several of these parameters or subparameters are not present, default value for missing parameters will be used.

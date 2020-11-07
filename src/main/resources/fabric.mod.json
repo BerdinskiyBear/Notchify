@@ -8,7 +8,11 @@
     "BerdinskiyBear"
   ],
   "contributors": [],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/BerdinskiyBear/Notchify",
+    "issues": "https://github.com/BerdinskiyBear/Notchify/issues",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/notchify"
+  },
   "license": "MIT",
   "icon": "assets/notchify/icon.png",
   "environment": "*",
