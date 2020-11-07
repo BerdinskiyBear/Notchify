@@ -6,7 +6,6 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.gui.entries.DropdownBoxEntry;
-import me.shedaniel.clothconfig2.gui.entries.MultiElementListEntry;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -240,7 +239,7 @@ public class NotchifyClothConfigConfigScreenBuilder {
                 (representation, nestedListListEntry) -> {
                     if (representation == null)
                         representation = new NotchifyConfig.StatusEffectInstanceRepresentation();
-                    return new MultiElementListEntry<>(Text.of("Effect"),
+                    return new NotchifyMultiElementListEntry(Text.of("Effect"),
                             representation,
                             Lists.newArrayList(
                                     entryBuilder

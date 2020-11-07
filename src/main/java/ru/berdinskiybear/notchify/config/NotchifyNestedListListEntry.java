@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
 import me.shedaniel.clothconfig2.api.ReferenceProvider;
 import me.shedaniel.clothconfig2.gui.entries.AbstractListListEntry;
-import me.shedaniel.clothconfig2.gui.entries.MultiElementListEntry;
 import me.shedaniel.clothconfig2.gui.widget.DynamicEntryListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,7 +25,7 @@ import java.util.function.Supplier;
 public final class NotchifyNestedListListEntry extends AbstractListListEntry<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListCell, NotchifyNestedListListEntry> {
     private final List<ReferenceProvider<?>> referencableEntries = Lists.newArrayList();
 
-    public NotchifyNestedListListEntry(Text fieldName, List<NotchifyConfig.StatusEffectInstanceRepresentation> value, boolean defaultExpanded, Supplier<Optional<Text[]>> tooltipSupplier, Consumer<List<NotchifyConfig.StatusEffectInstanceRepresentation>> saveConsumerArg, Supplier<List<NotchifyConfig.StatusEffectInstanceRepresentation>> defaultValue, Text resetButtonKey, boolean deleteButtonEnabled, boolean insertInFront, BiFunction<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListListEntry, MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation>> createNewCell) {
+    public NotchifyNestedListListEntry(Text fieldName, List<NotchifyConfig.StatusEffectInstanceRepresentation> value, boolean defaultExpanded, Supplier<Optional<Text[]>> tooltipSupplier, Consumer<List<NotchifyConfig.StatusEffectInstanceRepresentation>> saveConsumerArg, Supplier<List<NotchifyConfig.StatusEffectInstanceRepresentation>> defaultValue, Text resetButtonKey, boolean deleteButtonEnabled, boolean insertInFront, BiFunction<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListListEntry, NotchifyMultiElementListEntry> createNewCell) {
         super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumerArg, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new NotchifyNestedListCell(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
         for (NotchifyNestedListCell cell : cells) {
             referencableEntries.add(cell.nestedEntry);
@@ -53,9 +52,9 @@ public final class NotchifyNestedListListEntry extends AbstractListListEntry<Not
     }
 
     public static class NotchifyNestedListCell extends AbstractListCell<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListCell, NotchifyNestedListListEntry> implements ReferenceProvider<NotchifyConfig.StatusEffectInstanceRepresentation> {
-        private final MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation> nestedEntry;
+        private final NotchifyMultiElementListEntry nestedEntry;
 
-        public NotchifyNestedListCell(@Nullable NotchifyConfig.StatusEffectInstanceRepresentation value, NotchifyNestedListListEntry listListEntry, MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation> nestedEntry) {
+        public NotchifyNestedListCell(@Nullable NotchifyConfig.StatusEffectInstanceRepresentation value, NotchifyNestedListListEntry listListEntry, NotchifyMultiElementListEntry nestedEntry) {
             super(value, listListEntry);
             this.nestedEntry = nestedEntry;
         }
