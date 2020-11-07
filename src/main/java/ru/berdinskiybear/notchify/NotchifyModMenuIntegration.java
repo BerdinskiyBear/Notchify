@@ -268,7 +268,7 @@ public class NotchifyModMenuIntegration implements ModMenuApi {
                                                                 } else {
                                                                     Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(getValue());
                                                                     MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
-                                                                    drawSprite(matrices, x + width - 18, y + 2, 200, 16, 16, sprite);
+                                                                    drawSprite(matrices, x + width - 19, y + 1, 200, 18, 18, sprite);
                                                                 }
                                                             }
                                                         },
@@ -291,7 +291,7 @@ public class NotchifyModMenuIntegration implements ModMenuApi {
                                                                         MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, this.toTextFunction.apply(this.r).asOrderedText(), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
                                                                         Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(selection);
                                                                         MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
-                                                                        drawSprite(matrices, x + 4, y + 2, 200, 16, 16, sprite);
+                                                                        drawSprite(matrices, x + 3, y + 1, 200, 18, 18, sprite);
                                                                     }
 
                                                                     @Override
