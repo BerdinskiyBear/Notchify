@@ -1,10 +1,10 @@
-package ru.berdinskiybear.notchify;
+package ru.berdinskiybear.notchify.config;
 
 import com.google.common.collect.Lists;
 import me.shedaniel.clothconfig2.api.AbstractConfigEntry;
-import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import me.shedaniel.clothconfig2.api.ReferenceProvider;
 import me.shedaniel.clothconfig2.gui.entries.AbstractListListEntry;
+import me.shedaniel.clothconfig2.gui.entries.MultiElementListEntry;
 import me.shedaniel.clothconfig2.gui.widget.DynamicEntryListWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.berdinskiybear.notchify.MaybeNestedListListEntry.MaybeNestedListCell;
+import ru.berdinskiybear.notchify.config.NotchifyNestedListListEntry.NotchifyNestedListCell;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,33 +22,20 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-/**
- * @param <T>     the configuration object type
- * @param <INNER> the type of the inner config entry
- */
 @Environment(EnvType.CLIENT)
-public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListListEntry<T, MaybeNestedListCell<T, INNER>, MaybeNestedListListEntry<T, INNER>> {
+public final class NotchifyNestedListListEntry extends AbstractListListEntry<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListCell, NotchifyNestedListListEntry> {
     private final List<ReferenceProvider<?>> referencableEntries = Lists.newArrayList();
 
-    public MaybeNestedListListEntry(Text fieldName,
-                                    List<T> value,
-                                    boolean defaultExpanded,
-                                    Supplier<Optional<Text[]>> tooltipSupplier,
-                                    Consumer<List<T>> saveConsumerArg,
-                                    Supplier<List<T>> defaultValue,
-                                    Text resetButtonKey,
-                                    boolean deleteButtonEnabled,
-                                    boolean insertInFront,
-                                    BiFunction<T, MaybeNestedListListEntry<T, INNER>, INNER> createNewCell) {
-        super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumerArg, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new MaybeNestedListCell<>(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
-        for (MaybeNestedListCell<T, INNER> cell : cells) {
+    public NotchifyNestedListListEntry(Text fieldName, List<NotchifyConfig.StatusEffectInstanceRepresentation> value, boolean defaultExpanded, Supplier<Optional<Text[]>> tooltipSupplier, Consumer<List<NotchifyConfig.StatusEffectInstanceRepresentation>> saveConsumerArg, Supplier<List<NotchifyConfig.StatusEffectInstanceRepresentation>> defaultValue, Text resetButtonKey, boolean deleteButtonEnabled, boolean insertInFront, BiFunction<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListListEntry, MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation>> createNewCell) {
+        super(fieldName, value, defaultExpanded, tooltipSupplier, saveConsumerArg, defaultValue, resetButtonKey, false, deleteButtonEnabled, insertInFront, (t, nestedListListEntry) -> new NotchifyNestedListCell(t, nestedListListEntry, createNewCell.apply(t, nestedListListEntry)));
+        for (NotchifyNestedListCell cell : cells) {
             referencableEntries.add(cell.nestedEntry);
         }
         setReferenceProviderEntries(referencableEntries);
     }
 
     @Override
-    public MaybeNestedListListEntry<T, INNER> self() {
+    public NotchifyNestedListListEntry self() {
         return this;
     }
 
@@ -60,31 +47,27 @@ public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListE
 
     @Override
     public void save() {
-        for (MaybeNestedListCell<T, INNER> cell : cells)
-            cell.nestedEntry.save();
+        for (NotchifyNestedListCell cell : cells)
+            cell.save();
         super.save();
     }
 
-    /**
-     * @param <T> the configuration object type
-     * @see MaybeNestedListListEntry
-     */
-    public static class MaybeNestedListCell<T, INNER extends AbstractConfigListEntry<T>> extends AbstractListCell<T, MaybeNestedListCell<T, INNER>, MaybeNestedListListEntry<T, INNER>> implements ReferenceProvider<T> {
-        private final INNER nestedEntry;
+    public static class NotchifyNestedListCell extends AbstractListCell<NotchifyConfig.StatusEffectInstanceRepresentation, NotchifyNestedListCell, NotchifyNestedListListEntry> implements ReferenceProvider<NotchifyConfig.StatusEffectInstanceRepresentation> {
+        private final MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation> nestedEntry;
 
-        public MaybeNestedListCell(@Nullable T value, MaybeNestedListListEntry<T, INNER> listListEntry, INNER nestedEntry) {
+        public NotchifyNestedListCell(@Nullable NotchifyConfig.StatusEffectInstanceRepresentation value, NotchifyNestedListListEntry listListEntry, MultiElementListEntry<NotchifyConfig.StatusEffectInstanceRepresentation> nestedEntry) {
             super(value, listListEntry);
             this.nestedEntry = nestedEntry;
         }
 
         @Override
         @NotNull
-        public AbstractConfigEntry<T> provideReferenceEntry() {
+        public AbstractConfigEntry<NotchifyConfig.StatusEffectInstanceRepresentation> provideReferenceEntry() {
             return nestedEntry;
         }
 
         @Override
-        public T getValue() {
+        public NotchifyConfig.StatusEffectInstanceRepresentation getValue() {
             return nestedEntry.getValue();
         }
 
@@ -141,6 +124,10 @@ public final class MaybeNestedListListEntry<T, INNER extends AbstractConfigListE
 
         public void lateRender(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             this.nestedEntry.lateRender(matrices, mouseX, mouseY, delta);
+        }
+
+        public void save() {
+            this.nestedEntry.save();
         }
     }
 }

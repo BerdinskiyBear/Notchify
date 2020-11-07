@@ -19,7 +19,7 @@
     "client": [],
     "server": [],
     "modmenu": [
-      "ru.berdinskiybear.notchify.NotchifyModMenuIntegration"
+      "ru.berdinskiybear.notchify.config.NotchifyModMenuIntegration"
     ]
   },
   "mixins": [

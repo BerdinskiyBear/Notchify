@@ -1,4 +1,4 @@
-package ru.berdinskiybear.notchify;
+package ru.berdinskiybear.notchify.config;
 
 import com.google.gson.annotations.SerializedName;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.NotNull;
+import ru.berdinskiybear.notchify.NotchifyMod;
 
 import java.util.ArrayList;
 import java.util.Collection;

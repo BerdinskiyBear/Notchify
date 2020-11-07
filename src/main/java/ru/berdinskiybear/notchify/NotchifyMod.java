@@ -7,6 +7,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.berdinskiybear.notchify.config.NotchifyConfig;
+import ru.berdinskiybear.notchify.config.NotchifyConfigReloader;
 
 import java.io.File;
 import java.io.FileReader;

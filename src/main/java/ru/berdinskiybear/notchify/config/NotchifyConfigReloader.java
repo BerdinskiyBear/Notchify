@@ -1,10 +1,11 @@
-package ru.berdinskiybear.notchify;
+package ru.berdinskiybear.notchify.config;
 
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import ru.berdinskiybear.notchify.NotchifyMod;
 
 public class NotchifyConfigReloader implements SimpleSynchronousResourceReloadListener {
     @Override
