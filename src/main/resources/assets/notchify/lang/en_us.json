@@ -1,0 +1,68 @@
+{
+  "notchify.configScreen.title": "Notchify Mod Config",
+  "notchify.configScreen.category": "General",
+
+  "notchify.configScreen.setting.anvilEnabled.name": "Notchification via anvil",
+  "notchify.configScreen.setting.anvilEnabled.description": "Allows to create enchanted golden apples on anvil using xp and an optional item.",
+
+  "notchify.configScreen.setting.enchantingTableEnabled.name": "Notchification via enchanting table",
+  "notchify.configScreen.setting.enchantingTableEnabled.description": "Allows to enchant golden apples on enchanting table same way as tools, weapons and armor.",
+
+  "notchify.configScreen.setting.appleEnchantmentCost.name": "Enchantment XP cost",
+  "notchify.configScreen.setting.appleEnchantmentCost.description": "Amount of XP levels that player will need to create enchanted golden apple on anvil. This value also influences chance of enchantment when using enchantment table. Be aware that setting this value over 39 will make it impossible to make enchanted golden apples due to vanilla limitation. To circumvent this you can use Anvil Fix mod.",
+
+  "notchify.configScreen.setting.creativePlayerAlwaysSuccessful.name": "Creative player always succeeds",
+  "notchify.configScreen.setting.creativePlayerAlwaysSuccessful.description": "If enabled, players in creative mode always can enchant with 100% chance.",
+
+  "notchify.configScreen.setting.survivalPlayerAlwaysSuccessful.name": "All players succeed",
+  "notchify.configScreen.setting.survivalPlayerAlwaysSuccessful.description": "If enabled, all players can enchant with 100%.",
+
+  "notchify.configScreen.setting.enchantingChanceModifier.name": "Enchanting chance modifier",
+  "notchify.configScreen.setting.enchantingChanceModifier.description": "Modifies the chance of enchanting a golden apple.",
+
+  "notchify.configScreen.setting.goldenAppleDisappearing.name": "Golden apple disappearing",
+  "notchify.configScreen.setting.goldenAppleDisappearing.description": "If enabled, golden apple can disappear when golden apple enchanting fails.",
+
+  "notchify.configScreen.setting.vanishingChance.name": "Disappearing chance",
+  "notchify.configScreen.setting.vanishingChance.description": "If enchanting fails golden apple disappears with this chance.",
+
+  "notchify.configScreen.setting.appleBecomingCursed.name": "Enchanted apple curse",
+  "notchify.configScreen.setting.appleBecomingCursed.description": "If enchanting succeeds, enchanted golden apple can come out cursed.",
+
+  "notchify.configScreen.setting.curseChance.name": "Chance of curse",
+  "notchify.configScreen.setting.curseChance.description": "If enchanting succeeds, enchanted golden apple can come out cursed with this chance.",
+
+  "notchify.configScreen.setting.secondaryItemRequired.name": "Second item required",
+  "notchify.configScreen.setting.secondaryItemRequired.description": "If enabled, creating an enchanted golden apple on anvil requires second item.",
+
+  "notchify.configScreen.setting.secondaryItem.name": "Second item",
+  "notchify.configScreen.setting.secondaryItem.description": "Item that player has to combine golden apple with to get enchanted golden apple.",
+
+  "notchify.configScreen.setting.secondaryItemAmount.name": "Second item amount",
+  "notchify.configScreen.setting.secondaryItemAmount.description": "The amount of second item player has to combine to create enchanted golden apple.",
+
+  "notchify.configScreen.setting.secondaryItemNbtEnabled.name": "Second item NBT enabled",
+  "notchify.configScreen.setting.secondaryItemNbtEnabled.description": "If enabled, NBT tags for second item can be specified.",
+
+  "notchify.configScreen.setting.secondaryItemNbt.name": "Second item NBT tags",
+  "notchify.configScreen.setting.secondaryItemNbt.description": "NBT tags that second item has to have.",
+
+  "notchify.configScreen.setting.grindingEnabled.name": "Grindstone un-enchanting",
+  "notchify.configScreen.setting.grindingEnabled.description": "If enabled, enchanted golden apple can be converted back into golden apple.",
+
+  "notchify.configScreen.setting.grindingXpMultiplier.name": "XP multiplier",
+  "notchify.configScreen.setting.grindingXpMultiplier.description": "Multiplier for the amount of xp points player gets un-enchanted.",
+
+  "notchify.configScreen.setting.cursedApplePoisonous.name": "Cursed apples poisoning",
+  "notchify.configScreen.setting.cursedApplePoisonous.description": "If enabled, cursed enchanted golden apples can give side effects.",
+
+  "notchify.configScreen.setting.statusEffectInstances.name": "Cursed apple poisoning effects",
+  "notchify.configScreen.setting.statusEffectInstances.description": "Effects below will occur if cursed apple is consumed.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.name": "Effect",
+  "notchify.configScreen.setting.statusEffectInstances.effect.id.name": "Status effect ID",
+  "notchify.configScreen.setting.statusEffectInstances.effect.id.description": "Status effect ID.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.duration.name": "Duration",
+  "notchify.configScreen.setting.statusEffectInstances.effect.duration.description": "Duration of this effect in ticks.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.amplifier.name": "Amplifier",
+  "notchify.configScreen.setting.statusEffectInstances.effect.amplifier.description": "Amplifier is one less than the level of this effect."
+}
