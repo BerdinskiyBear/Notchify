@@ -21,7 +21,6 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
         super(type, syncId, playerInventory, context);
     }
 
-
     @Shadow private String newItemName;
     @Shadow @Final private Property levelCost;
 
@@ -39,8 +38,11 @@ public abstract class NotchifyUsingAnvil extends ForgingScreenHandler {
                                 NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет необходим
                                         && rightStack.getItem() == NotchifyMod.getCurrentConfig().getSecondaryItem() // и предмет как в настройках
                                         && rightStack.getCount() == NotchifyMod.getCurrentConfig().getSecondaryItemAmount() // и предметов количество как в настройках
-                                        && (!NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled() // и если NBT необходим
-                                                        || NbtHelper.matches(NotchifyMod.getCurrentConfig().getSecondaryItemNbt(), rightStack.getTag(), true)) // и теги предмета соответствуют тегам
+                                        && // и
+                                        (
+                                                !NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled() // либо NBT ненужен
+                                                        || NbtHelper.matches(NotchifyMod.getCurrentConfig().getSecondaryItemNbt(), rightStack.getTag(), true) // либо теги предмета соответствуют тегам
+                                        )
                         ) || ( // либо
                                 !NotchifyMod.getCurrentConfig().isSecondaryItemRequired() // второй предмет не нужен
                                         && rightStack.isEmpty() // и второго предмета нет

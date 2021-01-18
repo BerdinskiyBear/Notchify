@@ -2,12 +2,12 @@ package ru.berdinskiybear.notchify.mixins;
 
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Blocks;
-import net.minecraft.screen.*;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -37,7 +37,9 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
     @Shadow @Final public int[] enchantmentPower;
     @Shadow @Final public int[] enchantmentId;
     @Shadow @Final public int[] enchantmentLevel;
-    @Shadow public abstract void onContentChanged(Inventory inventory);
+
+    @Shadow
+    public abstract void onContentChanged(Inventory inventory);
 
     @Inject(method = "onContentChanged", at = @At(value = "HEAD"), cancellable = true)
     public void notchificationCalculations(Inventory inv, CallbackInfo info) {
@@ -116,7 +118,7 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                 // если либо есть лазурит и его не меньше чем выбранный уровень и у игрока опыта не меньше чем выбранного уровня и уровня зачарования, либо игрок в творческом режиме
                 if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
                     this.context.run((world, blockPos) -> {
-                        this.random.setSeed((long) (this.seed.get() + id + 3));
+                        this.random.setSeed(3L + this.seed.get() + id);
                         float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getCurrentConfig().getEnchantingChanceModifier()) / (NotchifyMod.getCurrentConfig().getAppleEnchantmentCost() * 10.0D));
 
                         player.applyEnchantmentCosts(null, button);
