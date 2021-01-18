@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.berdinskiybear.notchify.config.NotchifyConfig;
 import ru.berdinskiybear.notchify.config.NotchifyConfigReloader;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,7 +17,7 @@ import java.util.Random;
 
 public class NotchifyMod implements ModInitializer {
 
-    public static Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "notchify";
     public static final String MOD_NAME = "Notchify";
@@ -88,8 +87,8 @@ public class NotchifyMod implements ModInitializer {
         return currentConfig;
     }
 
-    public static int calculateEnchantmentPower(Random random, int number, int bookshelvesblocks) {
-        int bookshelves = Math.min(bookshelvesblocks, 15);
+    public static int calculateEnchantmentPower(Random random, int number, int bookshelvesBlocks) {
+        int bookshelves = Math.min(bookshelvesBlocks, 15);
 
         int power = random.nextInt(8) + 1 + (bookshelves >> 1) + random.nextInt(bookshelves + 1);
         switch (number) {
