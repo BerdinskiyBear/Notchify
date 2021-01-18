@@ -12,18 +12,17 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 import ru.berdinskiybear.notchify.NotchifyMod;
-
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NotchifyClothConfigConfigScreenBuilder {
@@ -77,7 +76,7 @@ public class NotchifyClothConfigConfigScreenBuilder {
         );
 
         general.addEntry(entryBuilder
-                .startBooleanToggle(Text.of("Creavive player always succeeds"), NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())
+                .startBooleanToggle(Text.of("Creative player always succeeds"), NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())
                 .setTooltip(Text.of("If enabled, players in creative mode always can enchant with 100% chance."))
                 .setDefaultValue(defaultConfig.isCreativePlayerAlwaysSuccessful())
                 .setSaveConsumer(value -> temporaryConfig.setCreativePlayerAlwaysSuccessful(value))
@@ -191,6 +190,7 @@ public class NotchifyClothConfigConfigScreenBuilder {
                     } catch (CommandSyntaxException e) {
                         NotchifyMod.log(Level.ERROR, "HOW!?");
                         NotchifyMod.log(Level.ERROR, e.getMessage());
+                        temporaryConfig.setSecondaryItemNbt(new CompoundTag());
                     }
                 })
                 .build()
@@ -227,115 +227,118 @@ public class NotchifyClothConfigConfigScreenBuilder {
                 NotchifyConfig.StatusEffectInstanceRepresentation.representationsFrom(NotchifyMod.getCurrentConfig().getStatusEffectInstances()),
                 false,
                 () -> Optional.of(new Text[]{Text.of("These effects will occur if cursed apple is consumed.")}),
-                list -> {
-                    temporaryConfig.setStatusEffectInstances(NotchifyConfig.StatusEffectInstanceRepresentation.instancesFrom(list));
-                },
-                () -> {
-                    return NotchifyConfig.StatusEffectInstanceRepresentation.representationsFrom(defaultConfig.getStatusEffectInstances());
-                },
+                (List<NotchifyConfig.StatusEffectInstanceRepresentation> list) -> temporaryConfig.setStatusEffectInstances(NotchifyConfig.StatusEffectInstanceRepresentation.instancesFrom(list)),
+                () -> NotchifyConfig.StatusEffectInstanceRepresentation.representationsFrom(defaultConfig.getStatusEffectInstances()),
                 entryBuilder.getResetButtonKey(),
                 true,
                 false,
-                (representation, nestedListListEntry) -> {
+                (NotchifyConfig.StatusEffectInstanceRepresentation representation, NotchifyNestedListListEntry nestedListListEntry) -> {
                     if (representation == null)
                         representation = new NotchifyConfig.StatusEffectInstanceRepresentation();
-                    return new NotchifyMultiElementListEntry(Text.of("Effect"),
-                            representation,
-                            Lists.newArrayList(
-                                    entryBuilder
-                                            .startDropdownMenu(Text.of("Status effect ID"),
-                                                    new DropdownBoxEntry.DefaultSelectionTopCellElement<StatusEffect>(representation.createStatusEffectInstance().get().getEffectType(),
-                                                            str -> {
-                                                                return Registry.STATUS_EFFECT.get(new Identifier(str));
-                                                            },
-                                                            effect -> {
-                                                                return Text.of(Registry.STATUS_EFFECT.getId(effect).toString());
-                                                            }) {
-                                                        @Override
-                                                        public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                                                            textFieldWidget.x = x + 4;
-                                                            textFieldWidget.y = y + 6;
-                                                            textFieldWidget.setWidth(width - 4 - 20);
-                                                            textFieldWidget.setEditable(getParent().isEditable());
-                                                            textFieldWidget.setEditableColor(getPreferredTextColor());
-                                                            textFieldWidget.render(matrices, mouseX, mouseY, delta);
-                                                            if (hasConfigError()) {
-                                                                MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(Items.BARRIER.getDefaultStack(), x + width - 18, y + 2);
-                                                            } else {
-                                                                Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(getValue());
-                                                                MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
-                                                                drawSprite(matrices, x + width - 19, y + 1, 200, 18, 18, sprite);
+                    Optional<StatusEffectInstance> optionalStatusEffectInstance = representation.createStatusEffectInstance();
+                    if (!optionalStatusEffectInstance.isPresent())
+                        throw new IllegalStateException();
+                    else
+                        //noinspection ConstantConditions
+                        return new NotchifyMultiElementListEntry(Text.of("Effect"),
+                                representation,
+                                Lists.newArrayList(
+                                        entryBuilder
+                                                .startDropdownMenu(Text.of("Status effect ID"),
+                                                        new DropdownBoxEntry.DefaultSelectionTopCellElement<StatusEffect>(optionalStatusEffectInstance.get().getEffectType(),
+                                                                NotchifyClothConfigConfigScreenBuilder::stringToStatusEffect,
+                                                                NotchifyClothConfigConfigScreenBuilder::statusEffectToText) {
+                                                            @Override
+                                                            public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
+                                                                textFieldWidget.x = x + 4;
+                                                                textFieldWidget.y = y + 6;
+                                                                textFieldWidget.setWidth(width - 4 - 20);
+                                                                textFieldWidget.setEditable(getParent().isEditable());
+                                                                textFieldWidget.setEditableColor(getPreferredTextColor());
+                                                                textFieldWidget.render(matrices, mouseX, mouseY, delta);
+                                                                if (hasConfigError()) {
+                                                                    MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(Items.BARRIER.getDefaultStack(), x + width - 18, y + 2);
+                                                                } else {
+                                                                    Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(getValue());
+                                                                    MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
+                                                                    drawSprite(matrices, x + width - 19, y + 1, 200, 18, 18, sprite);
+                                                                }
+                                                            }
+                                                        },
+                                                        new DropdownBoxEntry.DefaultSelectionCellCreator<StatusEffect>(NotchifyClothConfigConfigScreenBuilder::statusEffectToText) {
+                                                            @Override
+                                                            public DropdownBoxEntry.SelectionCellElement<StatusEffect> create(StatusEffect selection) {
+                                                                return new DropdownBoxEntry.DefaultSelectionCellElement<StatusEffect>(selection, this.toTextFunction) {
+                                                                    @Override
+                                                                    public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
+                                                                        this.rendering = true;
+                                                                        this.x = x;
+                                                                        this.y = y;
+                                                                        this.width = width;
+                                                                        this.height = height;
+                                                                        boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+                                                                        if (b)
+                                                                            fill(matrices, x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
+                                                                        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, this.toTextFunction.apply(this.r).asOrderedText(), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
+                                                                        Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(selection);
+                                                                        MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
+                                                                        drawSprite(matrices, x + 3, y + 1, 200, 18, 18, sprite);
+                                                                    }
+
+                                                                    @Override
+                                                                    public void dontRender(MatrixStack matrixStack, float delta) {
+                                                                        this.rendering = false;
+                                                                    }
+                                                                };
+                                                            }
+
+                                                            @Override
+                                                            public int getCellHeight() {
+                                                                return 20;
+                                                            }
+
+                                                            @Override
+                                                            public int getCellWidth() {
+                                                                return 146;
+                                                            }
+
+                                                            @Override
+                                                            public int getDropBoxMaxHeight() {
+                                                                return getCellHeight() * 7;
                                                             }
                                                         }
-                                                    },
-                                                    new DropdownBoxEntry.DefaultSelectionCellCreator<StatusEffect>(effect -> {
-                                                        return Text.of(Registry.STATUS_EFFECT.getId(effect).toString());
-                                                    }) {
-                                                        @Override
-                                                        public DropdownBoxEntry.SelectionCellElement<StatusEffect> create(StatusEffect selection) {
-                                                            return new DropdownBoxEntry.DefaultSelectionCellElement<StatusEffect>(selection, this.toTextFunction) {
-                                                                @Override
-                                                                public void render(MatrixStack matrices, int mouseX, int mouseY, int x, int y, int width, int height, float delta) {
-                                                                    this.rendering = true;
-                                                                    this.x = x;
-                                                                    this.y = y;
-                                                                    this.width = width;
-                                                                    this.height = height;
-                                                                    boolean b = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
-                                                                    if (b)
-                                                                        fill(matrices, x + 1, y + 1, x + width - 1, y + height - 1, -15132391);
-                                                                    MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, this.toTextFunction.apply(this.r).asOrderedText(), x + 6 + 18, y + 6, b ? 16777215 : 8947848);
-                                                                    Sprite sprite = MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(selection);
-                                                                    MinecraftClient.getInstance().getTextureManager().bindTexture(sprite.getAtlas().getId());
-                                                                    drawSprite(matrices, x + 3, y + 1, 200, 18, 18, sprite);
-                                                                }
-
-                                                                @Override
-                                                                public void dontRender(MatrixStack matrixStack, float delta) {
-                                                                    this.rendering = false;
-                                                                }
-                                                            };
-                                                        }
-
-                                                        @Override
-                                                        public int getCellHeight() {
-                                                            return 20;
-                                                        }
-
-                                                        @Override
-                                                        public int getCellWidth() {
-                                                            return 146;
-                                                        }
-
-                                                        @Override
-                                                        public int getDropBoxMaxHeight() {
-                                                            return getCellHeight() * 7;
-                                                        }
-                                                    }
-                                            )
-                                            .setTooltip(Text.of("Status effect ID."))
-                                            .setDefaultValue(Registry.STATUS_EFFECT.get(new Identifier(new NotchifyConfig.StatusEffectInstanceRepresentation().getStatusEffectId())))
-                                            .setSelections(Registry.STATUS_EFFECT.stream().sorted(Comparator.comparing(Registry.STATUS_EFFECT::getId)).collect(Collectors.toCollection(LinkedHashSet::new)))
-                                            .setSaveConsumer(representation::setStatusEffect)
-                                            .build(),
-                                    entryBuilder
-                                            .startIntField(Text.of("Duration"), representation.getDuration())
-                                            .setTooltip(Text.of("Duration of this effect in ticks."))
-                                            .setDefaultValue(new NotchifyConfig.StatusEffectInstanceRepresentation().getDuration())
-                                            .setSaveConsumer(representation::setDuration)
-                                            .build(),
-                                    entryBuilder
-                                            .startIntField(Text.of("Amplifier"), representation.getAmplifier())
-                                            .setTooltip(Text.of("Amplifier is one less than the level of this effect."))
-                                            .setDefaultValue(new NotchifyConfig.StatusEffectInstanceRepresentation().getAmplifier())
-                                            .setSaveConsumer(representation::setAmplifier)
-                                            .build()
-                            ),
-                            true
-                    );
-                }
-        ));
+                                                )
+                                                .setTooltip(Text.of("Status effect ID."))
+                                                .setDefaultValue(Registry.STATUS_EFFECT.get(new Identifier(new NotchifyConfig.StatusEffectInstanceRepresentation().getStatusEffectId())))
+                                                .setSelections(Registry.STATUS_EFFECT.stream().sorted(Comparator.comparing(Registry.STATUS_EFFECT::getId)).collect(Collectors.toCollection(LinkedHashSet::new)))
+                                                .setSaveConsumer(representation::setStatusEffect)
+                                                .build(),
+                                        entryBuilder
+                                                .startIntField(Text.of("Duration"), representation.getDuration())
+                                                .setTooltip(Text.of("Duration of this effect in ticks."))
+                                                .setDefaultValue(new NotchifyConfig.StatusEffectInstanceRepresentation().getDuration())
+                                                .setSaveConsumer(representation::setDuration)
+                                                .build(),
+                                        entryBuilder
+                                                .startIntField(Text.of("Amplifier"), representation.getAmplifier())
+                                                .setTooltip(Text.of("Amplifier is one less than the level of this effect."))
+                                                .setDefaultValue(new NotchifyConfig.StatusEffectInstanceRepresentation().getAmplifier())
+                                                .setSaveConsumer(representation::setAmplifier)
+                                                .build()
+                                ),
+                                true
+                        );
+                })
+        );
 
         return builder.build();
+    }
+
+    private static Text statusEffectToText(StatusEffect effect) {
+        return Text.of(Objects.requireNonNull(Registry.STATUS_EFFECT.getId(effect)).toString());
+    }
+
+    private static StatusEffect stringToStatusEffect(String str) {
+        return Registry.STATUS_EFFECT.get(new Identifier(str));
     }
 }
