@@ -18,6 +18,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
@@ -48,133 +49,129 @@ public class NotchifyClothConfigConfigScreenBuilder {
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Notchification via anvil"), NotchifyMod.getCurrentConfig().isAnvilEnabled())
-                .setTooltip(Text.of("Allows to create enchanted golden apples on anvil using xp and an optional item."))
                 .setDefaultValue(defaultConfig.isAnvilEnabled())
                 .setSaveConsumer(value -> temporaryConfig.setAnvilEnabled(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Allows to create enchanted golden apples on anvil using xp and an optional item.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Notchification via enchanting table"), NotchifyMod.getCurrentConfig().isEnchantingTableEnabled())
-                .setTooltip(Text.of("Allows to enchant golden apples on enchanting table same way as tools, weapons and armor"))
                 .setDefaultValue(defaultConfig.isEnchantingTableEnabled())
                 .setSaveConsumer(value -> temporaryConfig.setEnchantingTableEnabled(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Allows to enchant golden apples on enchanting table same way as tools, weapons and armor").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startIntField(Text.of("Enchantment XP cost"), NotchifyMod.getCurrentConfig().getAppleEnchantmentCost())
-                .setTooltip(Text.of("Amount of XP levels that player will need to create enchanted golden apple on anvil." +
-                        "This value also influences chance of enchantment when using enchantment table." +
-                        "Be aware that setting this value over 39 will make it impossible to make enchanted golden apples" +
-                        "due to vanilla limitation. To circumvent this you can use Anvil Fix mod"))
                 .setMin(1)
                 .setMax(255)
                 .setDefaultValue(defaultConfig.getAppleEnchantmentCost())
                 .setSaveConsumer(value -> temporaryConfig.setAppleEnchantmentCost(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Amount of XP levels that player will need to create enchanted golden apple on anvil. This value also influences chance of enchantment when using enchantment table. Be aware that setting this value over 39 will make it impossible to make enchanted golden apples due to vanilla limitation. To circumvent this you can use Anvil Fix mod.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Creative player always succeeds"), NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())
-                .setTooltip(Text.of("If enabled, players in creative mode always can enchant with 100% chance."))
                 .setDefaultValue(defaultConfig.isCreativePlayerAlwaysSuccessful())
                 .setSaveConsumer(value -> temporaryConfig.setCreativePlayerAlwaysSuccessful(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, players in creative mode always can enchant with 100% chance.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("All players succeed"), NotchifyMod.getCurrentConfig().isSurvivalPlayerAlwaysSuccessful())
-                .setTooltip(Text.of("If enabled, all players can enchant with 100%"))
                 .setDefaultValue(defaultConfig.isSurvivalPlayerAlwaysSuccessful())
                 .setSaveConsumer(value -> temporaryConfig.setSurvivalPlayerAlwaysSuccessful(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, all players can enchant with 100%").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startDoubleField(Text.of("Enchanting chance modifier"), NotchifyMod.getCurrentConfig().getEnchantingChanceModifier())
-                .setTooltip(Text.of("Modifies the chance of enchanting a golden apple."))
                 .setMin(0.0D)
                 .setDefaultValue(defaultConfig.getEnchantingChanceModifier())
                 .setSaveConsumer(value -> temporaryConfig.setEnchantingChanceModifier(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Modifies the chance of enchanting a golden apple.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Golden apple disappearing"), NotchifyMod.getCurrentConfig().isGoldenAppleDisappearing())
-                .setTooltip(Text.of("If enabled, golden apple can disappear when golden apple enchanting fails."))
                 .setDefaultValue(defaultConfig.isGoldenAppleDisappearing())
                 .setSaveConsumer(value -> temporaryConfig.setGoldenAppleDisappearing(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, golden apple can disappear when golden apple enchanting fails.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startDoubleField(Text.of("Disappearing chance"), NotchifyMod.getCurrentConfig().getVanishingChance())
-                .setTooltip(Text.of("If enchanting fails golden apple disappears with this chance."))
                 .setMin(0.0D)
                 .setMax(1.0D)
                 .setDefaultValue(defaultConfig.getVanishingChance())
                 .setSaveConsumer(value -> temporaryConfig.setVanishingChance(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enchanting fails golden apple disappears with this chance.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Enchanted apple curse"), NotchifyMod.getCurrentConfig().isAppleBecomingCursed())
-                .setTooltip(Text.of("If enchanting succeeds, enchanted golden apple can come out cursed."))
                 .setDefaultValue(defaultConfig.isAppleBecomingCursed())
                 .setSaveConsumer(value -> temporaryConfig.setAppleBecomingCursed(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enchanting succeeds, enchanted golden apple can come out cursed.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startDoubleField(Text.of("Chance of curse"), NotchifyMod.getCurrentConfig().getCurseChance())
-                .setTooltip(Text.of("If enchanting succeeds, enchanted golden apple can come out cursed with this chance."))
                 .setMin(0.0D)
                 .setMax(1.0D)
                 .setDefaultValue(defaultConfig.getCurseChance())
                 .setSaveConsumer(value -> temporaryConfig.setCurseChance(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enchanting succeeds, enchanted golden apple can come out cursed with this chance.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Second item required"), NotchifyMod.getCurrentConfig().isSecondaryItemRequired())
-                .setTooltip(Text.of("If enabled, creating an enchanted golden apple on anvil requires second item."))
                 .setDefaultValue(defaultConfig.isSecondaryItemRequired())
                 .setSaveConsumer(value -> temporaryConfig.setSecondaryItemRequired(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, creating an enchanted golden apple on anvil requires second item.").copy().formatted(Formatting.GRAY)).build());
 
 
         general.addEntry(entryBuilder
                 .startDropdownMenu(Text.of("Second item"), DropdownMenuBuilder.TopCellElementBuilder.ofItemObject(NotchifyMod.getCurrentConfig().getSecondaryItem()), DropdownMenuBuilder.CellCreatorBuilder.ofItemObject())
-                .setTooltip(Text.of("Item that player has to combine golden apple with to get enchanted golden apple."))
                 .setDefaultValue(defaultConfig.getSecondaryItem())
-                .setSelections(Registry.ITEM.stream().sorted(Comparator.comparing(Item::toString)).collect(Collectors.toCollection(LinkedHashSet::new)))
+                .setSelections(Registry.ITEM.stream().sorted(Comparator.comparing(Item::toString)).collect(ArrayList::new, ArrayList::add, ArrayList::addAll))
                 .setSaveConsumer(value -> temporaryConfig.setSecondaryItem(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Item that player has to combine golden apple with to get enchanted golden apple.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startIntField(Text.of("Second item amount"), NotchifyMod.getCurrentConfig().getSecondaryItemAmount())
-                .setTooltip(Text.of("The amount of second item player has to combine to create enchanted golden apple."))
                 .setMin(1)
                 .setMax(64)
                 .setDefaultValue(defaultConfig.getSecondaryItemAmount())
                 .setSaveConsumer(value -> temporaryConfig.setSecondaryItemAmount(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("The amount of second item player has to combine to create enchanted golden apple.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Second item NBT enabled"), NotchifyMod.getCurrentConfig().isSecondaryItemNbtEnabled())
-                .setTooltip(Text.of("If enabled, NBT tags for second item can be specified"))
                 .setDefaultValue(defaultConfig.isSecondaryItemNbtEnabled())
                 .setSaveConsumer(value -> temporaryConfig.setSecondaryItemNbtEnabled(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, NBT tags for second item can be specified").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startTextField(Text.of("Second item NBT tags"), NotchifyMod.getCurrentConfig().getSecondaryItemNbt().toString())
-                .setTooltip(Text.of("NBT tags that second item has to have."))
                 .setDefaultValue(defaultConfig.getSecondaryItemNbt().toString())
                 .setErrorSupplier((value) -> {
                     try {
@@ -195,38 +192,40 @@ public class NotchifyClothConfigConfigScreenBuilder {
                 })
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("NBT tags that second item has to have.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Grindstone un-enchanting"), NotchifyMod.getCurrentConfig().isGrindingEnabled())
-                .setTooltip(Text.of("If enabled, enchanted golden apple can be converted back into golden apple"))
                 .setDefaultValue(defaultConfig.isGrindingEnabled())
                 .setSaveConsumer(value -> temporaryConfig.setGrindingEnabled(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, enchanted golden apple can be converted back into golden apple").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startDoubleField(Text.of("XP multiplier"), NotchifyMod.getCurrentConfig().getGrindingXpMultiplier())
-                .setTooltip(Text.of("Multiplier for the amount of xp points player gets un-enchanted."))
                 .setMin(0.0D)
                 .setMax(2.0D)
                 .setDefaultValue(defaultConfig.getGrindingXpMultiplier())
                 .setSaveConsumer(value -> temporaryConfig.setGrindingXpMultiplier(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Multiplier for the amount of xp points player gets un-enchanted.").copy().formatted(Formatting.GRAY)).build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(Text.of("Cursed apples poisoning"), NotchifyMod.getCurrentConfig().isCursedApplePoisonous())
-                .setTooltip(Text.of("If enabled, cursed enchanted golden apples can give side effects."))
                 .setDefaultValue(defaultConfig.isCursedApplePoisonous())
                 .setSaveConsumer(value -> temporaryConfig.setCursedApplePoisonous(value))
                 .build()
         );
+        general.addEntry(entryBuilder.startTextDescription(Text.of("If enabled, cursed enchanted golden apples can give side effects.").copy().formatted(Formatting.GRAY)).build());
 
+        general.addEntry(entryBuilder.startTextDescription(Text.of("Effects below will occur if cursed apple is consumed.").copy().formatted(Formatting.GRAY)).build());
         general.addEntry(new NotchifyNestedListListEntry(
                 Text.of("Cursed apple poisoning effects"),
                 NotchifyConfig.StatusEffectInstanceRepresentation.representationsFrom(NotchifyMod.getCurrentConfig().getStatusEffectInstances()),
                 false,
-                () -> Optional.of(new Text[]{Text.of("These effects will occur if cursed apple is consumed.")}),
+                Optional::empty,
                 (List<NotchifyConfig.StatusEffectInstanceRepresentation> list) -> temporaryConfig.setStatusEffectInstances(NotchifyConfig.StatusEffectInstanceRepresentation.instancesFrom(list)),
                 () -> NotchifyConfig.StatusEffectInstanceRepresentation.representationsFrom(defaultConfig.getStatusEffectInstances()),
                 entryBuilder.getResetButtonKey(),
