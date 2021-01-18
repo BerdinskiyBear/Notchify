@@ -14,9 +14,9 @@ import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.NotNull;
 import ru.berdinskiybear.notchify.NotchifyMod;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 public class NotchifyConfig {
@@ -286,7 +286,7 @@ public class NotchifyConfig {
         }
 
         public StatusEffectInstanceRepresentation(StatusEffectInstance instance) {
-            statusEffectId = Registry.STATUS_EFFECT.getId(instance.getEffectType()).toString();
+            statusEffectId = Objects.requireNonNull(Registry.STATUS_EFFECT.getId(instance.getEffectType())).toString();
             duration = instance.getDuration();
             amplifier = instance.getAmplifier();
         }
@@ -324,7 +324,7 @@ public class NotchifyConfig {
         }
 
         public void setStatusEffect(StatusEffect effect) {
-            this.setStatusEffectId(Registry.STATUS_EFFECT.getId(effect).toString());
+            this.setStatusEffectId(Objects.requireNonNull(Registry.STATUS_EFFECT.getId(effect)).toString());
         }
 
         public int getDuration() {
