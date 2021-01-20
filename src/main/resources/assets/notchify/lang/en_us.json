@@ -3,7 +3,7 @@
   "notchify.configScreen.category.general": "General",
   "notchify.configScreen.category.enchanting": "Enchanting on enchanting table",
   "notchify.configScreen.category.anvil": "Enchanting on anvil",
-  "notchify.configScreen.category.grinding": "Un-enchanting on grinding stone",
+  "notchify.configScreen.category.grinding": "Un-enchanting on grindstone",
 
   "notchify.configScreen.setting.anvilEnabled.name": "Notchification via anvil",
   "notchify.configScreen.setting.anvilEnabled.description": "Allows to create enchanted golden apples on anvil using xp and an optional item.",
