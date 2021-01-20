@@ -1,0 +1,68 @@
+{
+  "notchify.configScreen.title": "Настройки мода Notchify",
+  "notchify.configScreen.category": "Общие",
+
+  "notchify.configScreen.setting.anvilEnabled.name": "Зачарование на наковальне",
+  "notchify.configScreen.setting.anvilEnabled.description": "Разрешить создание зачарованных золотых яблок на наковальне.",
+
+  "notchify.configScreen.setting.enchantingTableEnabled.name": "Зачарование на столе зачарования",
+  "notchify.configScreen.setting.enchantingTableEnabled.description": "Разрешить создание зачарованных золотых яблок на столе зачарования.",
+
+  "notchify.configScreen.setting.appleEnchantmentCost.name": "Цена зачарования",
+  "notchify.configScreen.setting.appleEnchantmentCost.description": "Количество уровней опыта которое нужно потратить для зачарования золотого яблока на наковальне. Это число также влияет на шанс зачарования на столе зачарования. Значения выше 39 лишат возможности игроков создавать зачарованные золотые яблоки на наковальне из-за ограничения в игре. Чтобы обойти это ограничение используйте мод Anvil fix.",
+
+  "notchify.configScreen.setting.creativePlayerAlwaysSuccessful.name": "100% шанс в творческом режиме",
+  "notchify.configScreen.setting.creativePlayerAlwaysSuccessful.description": "Игроки в творческом режиме могут зачаровывать с шансом в 100%.",
+
+  "notchify.configScreen.setting.survivalPlayerAlwaysSuccessful.name": "100% шанс для всех",
+  "notchify.configScreen.setting.survivalPlayerAlwaysSuccessful.description": "Любые игроки могут зачаровывать с шансом в 100%.",
+
+  "notchify.configScreen.setting.enchantingChanceModifier.name": "Множитель шанса",
+  "notchify.configScreen.setting.enchantingChanceModifier.description": "Множитель шанса зачарования золотого яблока.",
+
+  "notchify.configScreen.setting.goldenAppleDisappearing.name": "Исчезновение золотого яблока",
+  "notchify.configScreen.setting.goldenAppleDisappearing.description": "Золотое яблоко может исчезнуть, если зачарование не удалось.",
+
+  "notchify.configScreen.setting.vanishingChance.name": "Шанс исчезновения",
+  "notchify.configScreen.setting.vanishingChance.description": "Шанс исчезновения золотого яблока при неудачной попытке зачарования.",
+
+  "notchify.configScreen.setting.appleBecomingCursed.name": "Проклятие на зачарованном яблоке",
+  "notchify.configScreen.setting.appleBecomingCursed.description": "При успешном зачаровании яблока зачарованное яблоко может стать проклятым.",
+
+  "notchify.configScreen.setting.curseChance.name": "Шанс проклятия",
+  "notchify.configScreen.setting.curseChance.description": "Шанс с которым зачарованное золотое яблоко может стать проклятым.",
+
+  "notchify.configScreen.setting.secondaryItemRequired.name": "Второй предмет на наковальне",
+  "notchify.configScreen.setting.secondaryItemRequired.description": "Если включено, то для зачарования на наковальне нужен второй предмет.",
+
+  "notchify.configScreen.setting.secondaryItem.name": "Тип второго предмета",
+  "notchify.configScreen.setting.secondaryItem.description": "Тип второго предмета используемого при зачаровании на наковальне.",
+
+  "notchify.configScreen.setting.secondaryItemAmount.name": "Количество второго предмета",
+  "notchify.configScreen.setting.secondaryItemAmount.description": "Строго это количество предмета необходимо при зачаровании на наковальне.",
+
+  "notchify.configScreen.setting.secondaryItemNbtEnabled.name": "NBT необходим",
+  "notchify.configScreen.setting.secondaryItemNbtEnabled.description": "Если включено, то у второго предмета проверяется NBT.",
+
+  "notchify.configScreen.setting.secondaryItemNbt.name": "Обязательные NBT теги",
+  "notchify.configScreen.setting.secondaryItemNbt.description": "NBT теги которые второй предмет должен иметь.",
+
+  "notchify.configScreen.setting.grindingEnabled.name": "Снятие зачарования",
+  "notchify.configScreen.setting.grindingEnabled.description": "Снятие зачарования с зачарованного золотого яблока.",
+
+  "notchify.configScreen.setting.grindingXpMultiplier.name": "Множитель опыта",
+  "notchify.configScreen.setting.grindingXpMultiplier.description": "Множитель опыта, который игрок получит при снятии зачарования.",
+
+  "notchify.configScreen.setting.cursedApplePoisonous.name": "Отравление проклятым яблоком",
+  "notchify.configScreen.setting.cursedApplePoisonous.description": "Если яблоко проклято, то его употребление добавит негативные эффекты.",
+
+  "notchify.configScreen.setting.statusEffectInstances.name": "Эффекты употребления проклятого яблока",
+  "notchify.configScreen.setting.statusEffectInstances.description": "Эффекты в списке ниже будут добавлены если проклятое яблоко будет употреблено.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.name": "Эффект",
+  "notchify.configScreen.setting.statusEffectInstances.effect.id.name": "ID эффекта",
+  "notchify.configScreen.setting.statusEffectInstances.effect.id.description": "ID эффекта.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.duration.name": "Длительность",
+  "notchify.configScreen.setting.statusEffectInstances.effect.duration.description": "Длительность эффекта в тиках.",
+  "notchify.configScreen.setting.statusEffectInstances.effect.amplifier.name": "Уровень эффекта",
+  "notchify.configScreen.setting.statusEffectInstances.effect.amplifier.description": "Уровень эффекта (счёт с нуля)."
+}
