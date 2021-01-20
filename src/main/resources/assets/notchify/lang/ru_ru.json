@@ -1,6 +1,9 @@
 {
   "notchify.configScreen.title": "Настройки мода Notchify",
-  "notchify.configScreen.category": "Общие",
+  "notchify.configScreen.category.general": "Общие",
+  "notchify.configScreen.category.enchanting": "Зачарование на столе",
+  "notchify.configScreen.category.anvil": "Зачарование на наковальне",
+  "notchify.configScreen.category.grinding": "Снятие зачарования",
 
   "notchify.configScreen.setting.anvilEnabled.name": "Зачарование на наковальне",
   "notchify.configScreen.setting.anvilEnabled.description": "Разрешить создание зачарованных золотых яблок на наковальне.",
