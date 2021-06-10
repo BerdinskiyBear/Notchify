@@ -17,7 +17,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +33,7 @@ public class NotchifyMultiElementListEntry extends TooltipListEntry<NotchifyConf
     private List<Element> children;
     private boolean expanded;
 
+    @SuppressWarnings("deprecation")
     public NotchifyMultiElementListEntry(Text categoryName, NotchifyConfig.StatusEffectInstanceRepresentation object, List<AbstractConfigListEntry<?>> entries, boolean defaultExpanded) {
         super(categoryName, null);
         this.object = object;
@@ -91,8 +91,8 @@ public class NotchifyMultiElementListEntry extends TooltipListEntry<NotchifyConf
     public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta) {
         super.render(matrices, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
         MinecraftClient.getInstance().getTextureManager().bindTexture(CONFIG_TEX);
-        DiffuseLighting.disable();
-        RenderSystem.color4f(1, 1, 1, 1);
+        DiffuseLighting.disableGuiDepthLighting();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         drawTexture(matrices, x - 15, y + 5, 24, (widget.rectangle.contains(mouseX, mouseY) ? 18 : 0) + (expanded ? 9 : 0), 9, 9);
         MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, getDisplayedFieldName().asOrderedText(), x, y + 6, widget.rectangle.contains(mouseX, mouseY) ? 0xffe6fe16 : -1);
         for (AbstractConfigListEntry entry : entries) {

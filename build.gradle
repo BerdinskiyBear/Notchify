@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.6.17'
+    id 'fabric-loom' version '0.8.17'
     id 'maven-publish'
 }
 
@@ -16,11 +16,9 @@ minecraft {
 //wtf is this
 repositories {
     maven {
-        url = 'https://dl.bintray.com/shedaniel/cloth-config-2'
+        url = "https://maven.shedaniel.me/"
     }
-    maven {
-        url = 'https://dl.bintray.com/shedaniel/cloth'
-    }
+    maven{ url = "https://maven.terraformersmc.com/releases/"}
 }
 
 dependencies {
@@ -29,7 +27,8 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-    modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+    //modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     modApi("me.shedaniel.cloth:config-2:${project.clothconfig_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
@@ -37,6 +36,7 @@ dependencies {
 }
 
 processResources {
+    duplicatesStrategy DuplicatesStrategy.WARN
     inputs.property "version", project.version
 
     from(sourceSets.main.resources.srcDirs) {
@@ -70,24 +70,4 @@ jar {
 
 // configure the maven publication
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(jar) {
-                builtBy remapJar
-            }
-            artifact("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar") {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-        }
-    }
-
-    // select the repositories you want to publish to
-    repositories {
-        // uncomment to publish to the local maven
-        // mavenLocal()
-    }
 }

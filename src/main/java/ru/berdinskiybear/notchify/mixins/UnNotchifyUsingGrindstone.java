@@ -20,7 +20,7 @@ public abstract class UnNotchifyUsingGrindstone extends ScreenHandler {
         super(type, syncId);
     }
 
-    @Shadow @Final private Inventory input;
+    @Shadow @Final Inventory input;
     @Shadow @Final private Inventory result;
 
     @Inject(method = "updateResult", at = @At(value = "HEAD"), cancellable = true)

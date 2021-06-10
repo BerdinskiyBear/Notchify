@@ -116,21 +116,21 @@ public abstract class NotchifyUsingEnchantingTable extends ScreenHandler {
                 int button = id + 1;
 
                 // если либо есть лазурит и его не меньше чем выбранный уровень и у игрока опыта не меньше чем выбранного уровня и уровня зачарования, либо игрок в творческом режиме
-                if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.abilities.creativeMode) {
+                if ((!lapisStack.isEmpty() && lapisStack.getCount() >= button && player.experienceLevel >= button && player.experienceLevel >= this.enchantmentPower[id]) || player.getAbilities().creativeMode) {
                     this.context.run((world, blockPos) -> {
                         this.random.setSeed(3L + this.seed.get() + id);
                         float playerChance = (float) ((enchantmentPower[id] * NotchifyMod.getCurrentConfig().getEnchantingChanceModifier()) / (NotchifyMod.getCurrentConfig().getAppleEnchantmentCost() * 10.0D));
 
                         player.applyEnchantmentCosts(null, button);
 
-                        if (!player.abilities.creativeMode) {
+                        if (!player.getAbilities().creativeMode) {
                             lapisStack.decrement(button);
                             if (lapisStack.isEmpty())
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                         }
 
                         // если либо игрок или удачлив, или в творческом режиме и настройки это допускают, либо все игроки всегда удачливы
-                        if ((this.random.nextFloat() < playerChance || (player.abilities.creativeMode && NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getCurrentConfig().isSurvivalPlayerAlwaysSuccessful()) {
+                        if ((this.random.nextFloat() < playerChance || (player.getAbilities().creativeMode && NotchifyMod.getCurrentConfig().isCreativePlayerAlwaysSuccessful())) || NotchifyMod.getCurrentConfig().isSurvivalPlayerAlwaysSuccessful()) {
                             ItemStack newApple = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1);
 
                             if (enchantingStack.hasCustomName())

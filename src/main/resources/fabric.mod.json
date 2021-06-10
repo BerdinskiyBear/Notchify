@@ -30,7 +30,7 @@
     "notchify.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.10.6"
+    "fabricloader": ">=0.11"
   },
   "recommends": {
     "fabric": "*",

@@ -15,7 +15,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -177,7 +177,7 @@ public class NotchifyClothConfigConfigScreenBuilder {
                     } catch (CommandSyntaxException e) {
                         NotchifyMod.log(Level.ERROR, "HOW!?");
                         NotchifyMod.log(Level.ERROR, e.getMessage());
-                        temporaryConfig.setSecondaryItemNbt(new CompoundTag());
+                        temporaryConfig.setSecondaryItemNbt(new NbtCompound());
                     }
                 })
                 .build()

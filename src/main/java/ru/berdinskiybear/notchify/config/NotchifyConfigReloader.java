@@ -14,7 +14,7 @@ public class NotchifyConfigReloader implements SimpleSynchronousResourceReloadLi
     }
 
     @Override
-    public void apply(ResourceManager manager) {
+    public void reload(ResourceManager manager) {
         NotchifyMod.loadConfigFile();
     }
 

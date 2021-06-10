@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -61,7 +61,7 @@ public class NotchifyConfig {
     private StatusEffectInstanceRepresentation[] statusEffectInstanceRepresentations;
 
     private transient Item secondaryItem;
-    private transient CompoundTag secondaryItemNbt;
+    private transient NbtCompound secondaryItemNbt;
     //private transient StatusEffectInstance[] statusEffectInstances;
     private transient ArrayList<StatusEffectInstance> statusEffectInstances;
 
@@ -81,7 +81,7 @@ public class NotchifyConfig {
         secondaryItem = null;
         secondaryItemAmount = 1;
         secondaryItemNbtEnabled = false;
-        secondaryItemNbtString = new CompoundTag().toString();
+        secondaryItemNbtString = new NbtCompound().toString();
         secondaryItemNbt = null;
         grindingEnabled = true;
         grindingXpMultiplier = 0.1D;
@@ -209,18 +209,18 @@ public class NotchifyConfig {
         return secondaryItemNbtEnabled;
     }
 
-    public void setSecondaryItemNbt(@NotNull CompoundTag secondaryItemNbt) {
+    public void setSecondaryItemNbt(@NotNull NbtCompound secondaryItemNbt) {
         this.secondaryItemNbt = secondaryItemNbt.copy();
         this.secondaryItemNbtString = this.secondaryItemNbt.toString();
     }
 
-    public CompoundTag getSecondaryItemNbt() {
+    public NbtCompound getSecondaryItemNbt() {
         if (secondaryItemNbt == null)
             try {
                 secondaryItemNbt = StringNbtReader.parse(secondaryItemNbtString);
             } catch (CommandSyntaxException e) {
                 NotchifyMod.log(Level.ERROR, "Error parsing NBT tag: " + e.getMessage());
-                return new CompoundTag();
+                return new NbtCompound();
             }
         if (secondaryItemNbt.isEmpty()) {
             //NotchifyMod.log(Level.WARN, "Should secondary anvil item require NBT tag? Compound tag defined in config file is empty, thus always matches any item.");
